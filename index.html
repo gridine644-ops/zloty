@@ -6,8 +6,9 @@
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#0C1315">
 <link rel="icon" href="icon-192.png" type="image/png">
-<link rel="apple-touch-icon" href="icon-192.png">
+<link rel="apple-touch-icon" sizes="180x180" href="icon-180.png">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Złoty Plan">
 <title>Złoty Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -62,6 +63,7 @@
 
 *{box-sizing:border-box}
 [hidden]{display:none!important}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
 body{margin:0;background:var(--bg);color:var(--fg);font:400 15px/1.5 var(--f-body);-webkit-font-smoothing:antialiased}
 body::before{
   content:"";position:fixed;inset:0;pointer-events:none;z-index:0;
@@ -444,6 +446,13 @@ button{font:inherit;color:inherit}
 .note-chips button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 10px;font:500 12.5px/1.2 var(--f-body);color:var(--muted);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .note-chips button:hover{color:var(--fg);border-color:var(--gold)}
 
+.ios-hint{margin-top:10px;font-size:12.5px;color:var(--muted);max-width:46ch}
+.ios-hint b{color:var(--gold);font-weight:600}
+/* iPhone: fields under 16px make Safari zoom in on focus */
+@supports (-webkit-touch-callout: none){
+  .text-in,.select,.select.sm,.ob-name{font-size:16px}
+}
+
 /* Phone: tabs become a bottom bar under the thumb */
 @media (max-width:699px){
   .tabs{position:fixed;left:0;right:0;bottom:0;z-index:25;max-width:none;margin:0;border-radius:0;border-width:1px 0 0;
@@ -504,6 +513,7 @@ button{font:inherit;color:inherit}
       <h1>Złoty <span>Plan</span></h1>
       <p>Вводишь доходы и обязательные платежи, остальное раскладывается по конвертам по ценам Польши на октябрь 2026. Траты записываешь кнопкой внизу, цели и редкие траты живут во вкладке «Цели».</p>
       <button type="button" class="install-btn" id="installBtn" hidden>Установить на телефон</button>
+      <p class="ios-hint" id="iosHint" hidden>Чтобы поставить на iPhone как приложение: внизу Safari нажми <b>Поделиться</b> → <b>На экран «Домой»</b>.</p>
     </div>
   </header>
 
@@ -2182,6 +2192,17 @@ function saveFile(filename, blob){
       return dl.save({filename:filename, data:blob});
     });
   }
+  if (IS_IOS && navigator.canShare){
+    try {
+      var file = new File([blob], filename, {type:blob.type});
+      if (navigator.canShare({files:[file]})){
+        return navigator.share({files:[file], title:filename}).then(function(){ return {status:'saved'}; }, function(e){
+          if (e && e.name === 'AbortError') throw {code:'declined'};
+          throw e;
+        });
+      }
+    } catch(_){}
+  }
   var url = URL.createObjectURL(blob), a = document.createElement('a');
   a.href = url; a.download = filename; document.body.appendChild(a); a.click();
   setTimeout(function(){ URL.revokeObjectURL(url); a.remove(); }, 1500);
@@ -2377,6 +2398,12 @@ function renderNoteChips(cat){
   });
 }
 $('#exCats').addEventListener('change', function(e){ if (e.target && e.target.name === 'exCat') renderNoteChips(e.target.value); });
+var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform === 'MacIntel' && navigator.maxTouchPoints > 1);
+(function(){
+  var standalone = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
+  var inClaude = !!(window.claude && typeof window.claude.use === 'function');
+  if (IS_IOS && !standalone && !inClaude && /^https?:$/.test(location.protocol)) $('#iosHint').hidden = false;
+})();
 var installEvt = null;
 window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); installEvt = e; $('#installBtn').hidden = false; });
 window.addEventListener('appinstalled', function(){ installEvt = null; $('#installBtn').hidden = true; toast('Złoty Plan установлен: ищи иконку на главном экране'); });
