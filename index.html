@@ -3,6 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0C1315">
+<link rel="icon" href="icon-192.png" type="image/png">
+<link rel="apple-touch-icon" href="icon-192.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-title" content="Złoty Plan">
 <title>Złoty Plan</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -426,6 +432,29 @@ button{font:inherit;color:inherit}
 .bk-confirm .hint{margin-top:10px;font-size:12px}
 .bk-steps{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:13px;display:grid;gap:6px}
 
+/* Foldable setup panels */
+.fold-btn{flex:none;border:1px solid var(--line);background:var(--surface2);border-radius:10px;padding:7px 11px;font:600 12.5px/1.2 var(--f-body);color:var(--fg);cursor:pointer}
+.panel.is-folded .fold-btn{border-color:var(--gold);color:var(--gold)}
+.fold-sum{display:flex;flex-wrap:wrap;gap:4px 14px;font-size:13px;line-height:1.45;color:var(--muted)}
+.fold-sum b{color:var(--fg);font-weight:600;font-variant-numeric:tabular-nums}
+.panel.is-folded .panel-head{margin-bottom:6px}
+.install-btn{margin-top:10px;border:1px solid var(--gold);background:transparent;color:var(--gold);border-radius:999px;padding:7px 14px;font:600 13px/1.2 var(--f-body);cursor:pointer}
+.note-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:-6px}
+.note-chips:empty{display:none}
+.note-chips button{border:1px solid var(--line);background:var(--surface2);border-radius:999px;padding:5px 10px;font:500 12.5px/1.2 var(--f-body);color:var(--muted);cursor:pointer;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.note-chips button:hover{color:var(--fg);border-color:var(--gold)}
+
+/* Phone: tabs become a bottom bar under the thumb */
+@media (max-width:699px){
+  .tabs{position:fixed;left:0;right:0;bottom:0;z-index:25;max-width:none;margin:0;border-radius:0;border-width:1px 0 0;
+    padding-top:6px;padding-left:max(8px, env(safe-area-inset-left, 0px));padding-right:max(8px, env(safe-area-inset-right, 0px));padding-bottom:calc(6px + env(safe-area-inset-bottom, 0px));
+    background:color-mix(in srgb, var(--bg2) 94%, transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
+  .tabs button{padding:11px 4px;font-size:13px}
+  .fab{bottom:calc(78px + env(safe-area-inset-bottom, 0px))}
+  .toast{bottom:calc(150px + env(safe-area-inset-bottom, 0px))}
+  .page{padding-block:18px calc(170px + env(safe-area-inset-bottom, 0px))}
+}
+
 /* Floating add, sheet, toast */
 .fab{position:fixed;z-index:30;right:calc(16px + env(safe-area-inset-right, 0px));bottom:calc(18px + env(safe-area-inset-bottom, 0px));
   display:flex;align-items:center;gap:8px;border:0;border-radius:999px;padding:15px 22px 15px 18px;
@@ -474,6 +503,7 @@ button{font:inherit;color:inherit}
     <div class="brand">
       <h1>Złoty <span>Plan</span></h1>
       <p>Вводишь доходы и обязательные платежи, остальное раскладывается по конвертам по ценам Польши на октябрь 2026. Траты записываешь кнопкой внизу, цели и редкие траты живут во вкладке «Цели».</p>
+      <button type="button" class="install-btn" id="installBtn" hidden>Установить на телефон</button>
     </div>
   </header>
 
@@ -508,9 +538,10 @@ button{font:inherit;color:inherit}
 
   <main class="main" id="viewPlan" role="tabpanel" aria-labelledby="tab-plan">
     <div class="colL">
-      <section class="panel p-income" aria-labelledby="hIncome">
-        <div class="panel-head"><h2 class="h2" id="hIncome">Доход и обязательное</h2></div>
-        <div class="stack">
+      <section class="panel p-income" aria-labelledby="hIncome" data-fold="income">
+        <div class="panel-head"><h2 class="h2" id="hIncome">Доход и обязательное</h2><button type="button" class="fold-btn" data-fold-btn aria-expanded="true" aria-controls="foldIncome">Свернуть</button></div>
+        <p class="fold-sum" data-fold-sum hidden></p>
+        <div class="stack" id="foldIncome" data-fold-body>
           <label class="field big" for="salary">
             <span>Зарплата на руку (netto)</span>
             <span class="money"><input id="salary" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00"><b>zł</b></span>
@@ -565,9 +596,10 @@ button{font:inherit;color:inherit}
         </div>
       </section>
 
-      <section class="panel p-details" aria-labelledby="hDetails">
-        <div class="panel-head"><h2 class="h2" id="hDetails">Город, транспорт, связь</h2></div>
-        <div class="stack">
+      <section class="panel p-details" aria-labelledby="hDetails" data-fold="details">
+        <div class="panel-head"><h2 class="h2" id="hDetails">Город, транспорт, связь</h2><button type="button" class="fold-btn" data-fold-btn aria-expanded="true" aria-controls="foldDetails">Свернуть</button></div>
+        <p class="fold-sum" data-fold-sum hidden></p>
+        <div class="stack" id="foldDetails" data-fold-body>
           <label class="field" for="city">
             <span>Город (цена проездного для жителей)</span>
             <select id="city" class="select">
@@ -666,7 +698,9 @@ button{font:inherit;color:inherit}
       </section>
 
       <section class="panel bench" aria-labelledby="hBench">
-        <div class="panel-head"><h2 class="h2" id="hBench">Ориентиры Польши, 2026</h2><span class="sub">на 16 октября 2026</span></div>
+        <div class="panel-head"><h2 class="h2" id="hBench">Ориентиры Польши, 2026</h2><button type="button" class="fold-btn" data-fold-btn aria-expanded="true" aria-controls="foldBench">Свернуть</button></div>
+        <p class="fold-sum" data-fold-sum hidden><span>инфляция <b>4,1%</b></span><span>минималка <b>≈ 3 606</b> на руку</span><span>средняя <b>≈ 6 640</b></span><span>данные на 16 октября 2026</span></p>
+        <div id="foldBench" data-fold-body>
         <div class="lbl">Где твой доход на руку</div>
         <div class="scale">
           <div class="scale-line"></div>
@@ -695,6 +729,7 @@ button{font:inherit;color:inherit}
             <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-polsce-2026-podsumowanie/" target="_blank" rel="noopener">Freenance: стоимость жизни в Польше, 2026</a></li>
             <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-warszawie-2026/" target="_blank" rel="noopener">Freenance: стоимость жизни в Варшаве, 2026</a></li>
           </ol>
+        </div>
         </div>
       </section>
     </div>
@@ -813,6 +848,7 @@ button{font:inherit;color:inherit}
       <label class="field" for="exNote"><span>Заметка</span><input id="exNote" class="text-in" type="text" maxlength="60" autocomplete="off" placeholder="Biedronka, аптека…"></label>
       <label class="field" for="exDate"><span>Дата</span><input id="exDate" class="text-in" type="date"></label>
     </div>
+    <div class="note-chips" id="exNotes" aria-label="Недавние заметки"></div>
     <button type="submit" class="btn-primary">Записать</button>
   </form>
 </dialog>
@@ -1028,7 +1064,7 @@ function initStore(){
       cfgSeen = true;
       if (cfgDirty) return;
       var d = snap.data(), next = normCfg(d && d.cfg);
-      if (JSON.stringify(next) !== JSON.stringify(cfg)){ cfg = next; applyCfgToDom(); saveLocal(); render(); }
+      if (JSON.stringify(next) !== JSON.stringify(cfg)){ cfg = next; applyCfgToDom(); initFolds(); saveLocal(); render(); }
     }, onSubError);
     Store.monthsCol.onSnapshot(function(snap){
       if (Store.mode !== 'db') return;
@@ -1811,6 +1847,7 @@ function render(){
   renderToday(inp, res, P, sp);
   renderSpend(res, P, sp);
   renderGoalsView(inp, res, P, sp, G);
+  foldSummaries(inp, res);
   readout();
   recordHist(inp, res, P);
   renderHistory(P.s);
@@ -2242,6 +2279,7 @@ function openSheet(cat){
   $('#exAmt').value = ''; $('#exNote').value = ''; $('#exDate').value = ds(new Date()); $('#exErr').hidden = true;
   var c = cat || lastCat;
   var r = document.getElementById('exc-' + c) || document.getElementById('exc-groc'); r.checked = true;
+  renderNoteChips(r.value);
   if (typeof sheet.showModal === 'function'){ if (!sheet.open) sheet.showModal(); } else sheet.setAttribute('open', '');
   setTimeout(function(){ $('#exAmt').focus(); }, 60);
 }
@@ -2260,6 +2298,7 @@ $('#exForm').addEventListener('submit', function(e){
   var item = {id:uid(), a:amt, c:c, n:$('#exNote').value.trim().slice(0, 60), d:d, t:Date.now()};
   lastCat = c; lsSet('zloty-plan-lastcat', c);
   addExpense(item); closeSheet();
+  try { if (navigator.vibrate) navigator.vibrate(15); } catch(_){}
   toast('Записано: ' + money(amt) + ' zł · ' + TNAME[c], 'Отменить', function(){ removeExpense(item.id); });
 });
 
@@ -2273,7 +2312,79 @@ function setTab(t){
   });
   lsSet('zloty-plan-tab', t);
 }
-Object.keys(VIEWS).forEach(function(k){ $('#tab-' + k).addEventListener('click', function(){ setTab(k); }); });
+Object.keys(VIEWS).forEach(function(k){ $('#tab-' + k).addEventListener('click', function(){
+  setTab(k);
+  if (window.scrollY > 120) window.scrollTo({top:0, behavior:reduce ? 'auto' : 'smooth'});
+}); });
+
+/* ---------- phone conveniences ---------- */
+var FOLD_KEY = 'zloty-plan-fold', foldState = {};
+try { foldState = JSON.parse(lsGet(FOLD_KEY) || '{}') || {}; } catch(e){ foldState = {}; }
+function setFold(panel, folded, save){
+  var name = panel.getAttribute('data-fold');
+  panel.classList.toggle('is-folded', folded);
+  panel.querySelector('[data-fold-body]').hidden = folded;
+  panel.querySelector('[data-fold-sum]').hidden = !folded;
+  var b = panel.querySelector('[data-fold-btn]');
+  b.textContent = folded ? (name === 'bench' ? 'Показать' : 'Изменить') : 'Свернуть';
+  b.setAttribute('aria-expanded', String(!folded));
+  if (save){ foldState[name] = folded; lsSet(FOLD_KEY, JSON.stringify(foldState)); }
+}
+function initFolds(){
+  var filled = parse(cfg.salary) > 0;
+  $$('[data-fold]').forEach(function(p){
+    var n = p.getAttribute('data-fold');
+    setFold(p, foldState[n] != null ? !!foldState[n] : (n === 'bench' ? true : filled), false);
+  });
+}
+$$('[data-fold]').forEach(function(p){
+  p.querySelector('[data-fold-btn]').addEventListener('click', function(){
+    var folded = !p.classList.contains('is-folded');
+    setFold(p, folded, true);
+    if (!folded){ var first = p.querySelector('[data-fold-body] input'); if (first && p.getAttribute('data-fold') !== 'bench') first.focus({preventScroll:true}); }
+  });
+});
+function foldSummaries(inp, res){
+  var s1 = $('[data-fold="income"] [data-fold-sum]'), parts = [];
+  if (inp.actual > 0){
+    parts.push('доход <b>' + money(inp.actual) + ' zł</b>');
+    parts.push('зарплата <b>' + paydayVal() + '-го</b>');
+    if (inp.Hfull > 0) parts.push('жильё <b>' + money(inp.H) + ' zł</b>' + (cfg.live !== 'solo' ? ' (твоя часть)' : ''));
+    if (cfg.custom.length) parts.push('платежей <b>' + cfg.custom.length + '</b> на <b>' + money(res.O) + ' zł</b>');
+    if (cfg.incomes.length) parts.push('доп. доходов <b>' + cfg.incomes.length + '</b>');
+  } else parts.push('Впиши зарплату, чтобы начать');
+  s1.innerHTML = parts.map(function(p){ return '<span>' + p + '</span>'; }).join('');
+  var tm = {pass:'проездной', mix:'проездной + такси', car:'машина', walk:'пешком'}[cfg.tmode];
+  $('[data-fold="details"] [data-fold-sum]').innerHTML = '<span><b>' + esc(CITIES[inp.city].name) + '</b></span><span>' + tm + '</span><span>связь <b>' + money(res.F) + ' zł</b></span>';
+}
+document.addEventListener('focusin', function(e){
+  var t = e.target;
+  if (t && t.matches && t.matches('.money input') && t.value) setTimeout(function(){ try { t.select(); } catch(_){} }, 0);
+});
+function renderNoteChips(cat){
+  var box = $('#exNotes'); box.textContent = '';
+  var all = []; Object.keys(months).forEach(function(k){ all = all.concat(months[k]); });
+  all.sort(function(a, b){ return (b.t || 0) - (a.t || 0); });
+  var seen = {}, picked = [];
+  all.forEach(function(it){
+    if (picked.length >= 6 || !it.n || (it.c || 'other') !== cat) return;
+    var key = it.n.toLowerCase(); if (seen[key]) return; seen[key] = 1; picked.push(it.n);
+  });
+  picked.forEach(function(n){
+    var b = document.createElement('button'); b.type = 'button'; b.textContent = n;
+    b.addEventListener('click', function(){ $('#exNote').value = n; });
+    box.appendChild(b);
+  });
+}
+$('#exCats').addEventListener('change', function(e){ if (e.target && e.target.name === 'exCat') renderNoteChips(e.target.value); });
+var installEvt = null;
+window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); installEvt = e; $('#installBtn').hidden = false; });
+window.addEventListener('appinstalled', function(){ installEvt = null; $('#installBtn').hidden = true; toast('Złoty Plan установлен: ищи иконку на главном экране'); });
+$('#installBtn').addEventListener('click', function(){
+  if (!installEvt) return;
+  installEvt.prompt();
+  Promise.resolve(installEvt.userChoice).then(null, function(){}).then(function(){ installEvt = null; $('#installBtn').hidden = true; });
+});
 
 /* ---------- wiring ---------- */
 function onCfgChange(){ saveLocal(); scheduleCfgSave(); render(); }
@@ -2303,6 +2414,7 @@ setInterval(function(){ if (last && last.day !== ds(new Date())) render(); }, 60
 
 loadLocal();
 applyCfgToDom();
+initFolds();
 var h = location.hash.replace('#', '');
 setTab(VIEWS[h] ? h : (lsGet('zloty-plan-tab') || 'plan'));
 setStatus();
@@ -2311,5 +2423,6 @@ initStore();
 })();
 </script>
 
+<script>if ('serviceWorker' in navigator && location.protocol === 'https:') { window.addEventListener('load', function(){ navigator.serviceWorker.register('sw.js').catch(function(){}); }); }</script>
 </body>
 </html>
