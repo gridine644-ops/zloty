@@ -379,8 +379,8 @@ button{font:inherit;color:inherit}
 .goal-body{display:flex;flex-direction:column;gap:10px;min-width:0}
 .goal-top{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:end}
 .goal-name{font-weight:600}
-.goal-when{display:grid;grid-template-columns:auto minmax(0,1fr) minmax(0,90px);gap:8px;align-items:center}
-.goal-when .lbl{white-space:nowrap}
+.goal-when{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:6px 8px;align-items:center}
+.goal-when .lbl{white-space:nowrap;grid-column:1/-1}
 .goal-prog{font:400 11.5px/1.3 var(--f-mono);color:var(--muted);font-variant-numeric:tabular-nums}
 .goal-need{display:flex;justify-content:space-between;align-items:center;gap:8px;flex-wrap:wrap;font-size:13px;color:var(--fg)}
 .goal .meter-track i{background:var(--c-save)}
@@ -468,6 +468,11 @@ label.btn-sm{display:inline-block}
   .fab{bottom:calc(78px + env(safe-area-inset-bottom, 0px))}
   .toast{bottom:calc(150px + env(safe-area-inset-bottom, 0px))}
   .page{padding-block:18px calc(170px + env(safe-area-inset-bottom, 0px))}
+  .top{margin-bottom:12px;gap:12px}
+  .coin{width:40px;height:40px}
+  .coin .face{font-size:11px}
+  .brand h1{font-size:26px}
+  body.has-data .brand > p:first-of-type{display:none}
 }
 
 /* Floating add, sheet, toast */
@@ -1871,6 +1876,7 @@ function render(){
   renderSpend(res, P, sp);
   renderGoalsView(inp, res, P, sp, G);
   foldSummaries(inp, res);
+  document.body.classList.toggle('has-data', S > 0);
   readout();
   recordHist(inp, res, P);
   renderHistory(P.s);
@@ -2368,7 +2374,11 @@ function setTab(t){
 }
 Object.keys(VIEWS).forEach(function(k){ $('#tab-' + k).addEventListener('click', function(){
   setTab(k);
-  if (window.scrollY > 120) window.scrollTo({top:0, behavior:reduce ? 'auto' : 'smooth'});
+  var phone = window.matchMedia && matchMedia('(max-width: 699px)').matches;
+  if (phone && k !== 'plan'){
+    var y = $('#' + VIEWS[k]).getBoundingClientRect().top + window.scrollY - 12;
+    window.scrollTo({top:Math.max(0, y), behavior:reduce ? 'auto' : 'smooth'});
+  } else if (window.scrollY > 120) window.scrollTo({top:0, behavior:reduce ? 'auto' : 'smooth'});
 }); });
 
 /* ---------- phone conveniences ---------- */
