@@ -465,9 +465,12 @@ label.btn-sm{display:inline-block}
     padding-top:6px;padding-left:max(8px, env(safe-area-inset-left, 0px));padding-right:max(8px, env(safe-area-inset-right, 0px));padding-bottom:calc(6px + env(safe-area-inset-bottom, 0px));
     background:color-mix(in srgb, var(--bg2) 94%, transparent);-webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px)}
   .tabs button{padding:11px 4px;font-size:13px}
-  .fab{bottom:calc(78px + env(safe-area-inset-bottom, 0px))}
-  .toast{bottom:calc(150px + env(safe-area-inset-bottom, 0px))}
-  .page{padding-block:18px calc(170px + env(safe-area-inset-bottom, 0px))}
+  /* --tabbar-h is measured from the real bar (fonts, gesture area), so the button always sits above it */
+  html body .fab{bottom:calc(var(--tabbar-h, 60px) + 14px);padding:13px 18px 13px 15px;font-size:14px}
+  html body .toast{bottom:calc(var(--tabbar-h, 60px) + 82px)}
+  .page{padding-block:18px calc(var(--tabbar-h, 60px) + 110px)}
+  body[data-tab="history"] .fab{display:none}
+  html body[data-tab="history"] .toast{bottom:calc(var(--tabbar-h, 60px) + 14px)}
   .top{margin-bottom:12px;gap:12px}
   .coin{width:40px;height:40px}
   .coin .face{font-size:11px}
@@ -2370,8 +2373,16 @@ function setTab(t){
     $('#' + VIEWS[k]).hidden = k !== t;
     $('#tab-' + k).setAttribute('aria-selected', String(k === t));
   });
+  document.body.setAttribute('data-tab', t);
   lsSet('zloty-plan-tab', t);
 }
+function syncTabbar(){
+  var bar = $('.tabs'), phone = window.matchMedia && matchMedia('(max-width: 699px)').matches;
+  document.documentElement.style.setProperty('--tabbar-h', (phone ? bar.offsetHeight : 0) + 'px');
+}
+if ('ResizeObserver' in window) new ResizeObserver(syncTabbar).observe($('.tabs'));
+window.addEventListener('resize', syncTabbar);
+window.addEventListener('orientationchange', syncTabbar);
 Object.keys(VIEWS).forEach(function(k){ $('#tab-' + k).addEventListener('click', function(){
   setTab(k);
   var phone = window.matchMedia && matchMedia('(max-width: 699px)').matches;
@@ -2490,6 +2501,7 @@ var h = location.hash.replace('#', '');
 setTab(VIEWS[h] ? h : (lsGet('zloty-plan-tab') || 'plan'));
 setStatus();
 render();
+syncTabbar();
 initStore();
 })();
 </script>
