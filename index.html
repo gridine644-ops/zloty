@@ -432,6 +432,12 @@ button{font:inherit;color:inherit}
 .bk-confirm{margin-top:14px;padding:14px;border-radius:14px;border:1px solid var(--gold);background:color-mix(in srgb, var(--gold) 8%, var(--surface))}
 .bk-confirm p{font-size:14px}
 .bk-confirm .hint{margin-top:10px;font-size:12px}
+.vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+label.btn-sm{display:inline-block}
+.bk-code{margin-top:14px;border-top:1px solid var(--line);padding-top:12px}
+.bk-code summary{cursor:pointer;font-size:13.5px;color:var(--gold);font-weight:600}
+.bk-code .hint{margin-top:8px;font-size:12.5px;line-height:1.45}
+.bk-code textarea{resize:vertical;font-family:var(--f-mono);font-size:12px}
 .bk-steps{margin:14px 0 0;padding-left:20px;color:var(--muted);font-size:13px;display:grid;gap:6px}
 
 /* Foldable setup panels */
@@ -810,9 +816,16 @@ button{font:inherit;color:inherit}
       <p class="sub">Зарплата, траты, цели, фонд и история сохраняются в один файл Excel. Его можно открыть как обычную таблицу, хранить у себя и потом загрузить обратно на любом устройстве.</p>
       <div class="bk-actions">
         <button type="button" class="btn-primary" id="bkSave">Сохранить в Excel</button>
-        <button type="button" class="btn-sm" id="bkLoad">Загрузить из файла</button>
-        <input type="file" id="bkFile" accept=".xlsx,.json" hidden>
+        <label class="btn-sm" id="bkLoad" for="bkFile" role="button" tabindex="0">Загрузить из файла</label>
+        <input type="file" id="bkFile" class="vh" tabindex="-1" accept=".xlsx,.json,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet,application/json">
       </div>
+      <details class="bk-code" id="bkCode">
+        <summary>Файл не выбирается? Перенеси кодом</summary>
+        <p class="hint">Так бывает на iPhone и в приложении Claude. Скопируй код, сохрани его в Заметках или отправь себе, а на другом устройстве вставь в поле ниже. В коде то же самое, что в файле Excel.</p>
+        <div class="bk-actions"><button type="button" class="btn-sm gold" id="bkCopy">Скопировать код копии</button></div>
+        <label class="field" for="bkCodeIn" style="margin-top:14px"><span>Вставь код копии</span><textarea id="bkCodeIn" class="text-in" rows="3" autocomplete="off" spellcheck="false" placeholder="ZLOTY1:…"></textarea></label>
+        <div class="bk-actions"><button type="button" class="btn-sm" id="bkCodeLoad">Загрузить код</button></div>
+      </details>
       <p class="err" id="bkErr" style="margin-top:10px" hidden></p>
       <div class="bk-confirm" id="bkConfirm" hidden>
         <p id="bkSummary"></p>
@@ -2239,25 +2252,45 @@ function readBackupFile(f){
   });
 }
 var pendingImport = null;
-$('#bkLoad').addEventListener('click', function(){ var f = $('#bkFile'); f.value = ''; f.click(); });
-$('#bkFile').addEventListener('change', function(){
-  var f = this.files && this.files[0]; if (!f) return;
-  $('#bkErr').hidden = true; $('#bkConfirm').hidden = true;
-  readBackupFile(f).then(function(obj){
+$('#bkLoad').addEventListener('click', function(){ $('#bkFile').value = ''; });
+$('#bkLoad').addEventListener('keydown', function(e){ if (e.key === 'Enter' || e.key === ' '){ e.preventDefault(); $('#bkFile').value = ''; $('#bkFile').click(); } });
+function offerImport(obj){
     if (!obj || obj.app !== 'zloty-plan' || !obj.cfg) throw {kind:'plain'};
     pendingImport = {cfg:normCfg(obj.cfg), months:normMonths(obj.months)};
     var nItems = 0; Object.keys(pendingImport.months).forEach(function(k){ nItems += pendingImport.months[k].length; });
     var nHist = Object.keys(pendingImport.cfg.hist).length, nG = pendingImport.cfg.goals.length, nF = pendingImport.cfg.fund.length;
     var when = obj.exported && !isNaN(new Date(obj.exported)) ? ' от ' + dShort.format(new Date(obj.exported)) : '';
-    $('#bkSummary').textContent = 'В файле' + when + ': ' + nItems + ' ' + plural(nItems, 'трата', 'траты', 'трат') + ', история за ' + nHist + ' ' + plural(nHist, 'период', 'периода', 'периодов') + ', ' + nG + ' ' + plural(nG, 'цель', 'цели', 'целей') + ', ' + nF + ' ' + plural(nF, 'статья', 'статьи', 'статей') + ' фонда.';
+    $('#bkSummary').textContent = 'В копии' + when + ': ' + nItems + ' ' + plural(nItems, 'трата', 'траты', 'трат') + ', история за ' + nHist + ' ' + plural(nHist, 'период', 'периода', 'периодов') + ', ' + nG + ' ' + plural(nG, 'цель', 'цели', 'целей') + ', ' + nF + ' ' + plural(nF, 'статья', 'статьи', 'статей') + ' фонда.';
     $('#bkConfirm').hidden = false;
-  }).catch(function(e){
+    $('#bkConfirm').scrollIntoView({block:'nearest', behavior:reduce ? 'auto' : 'smooth'});
+}
+$('#bkFile').addEventListener('change', function(){
+  var f = this.files && this.files[0]; if (!f) return;
+  $('#bkErr').hidden = true; $('#bkConfirm').hidden = true;
+  readBackupFile(f).then(offerImport).catch(function(e){
     pendingImport = null;
     var k = e && e.kind;
     if (k === 'lib') showBkErr('Не получилось открыть Excel: нет интернета. Подключись к сети и попробуй ещё раз.');
     else if (k === 'corrupt') showBkErr('Файл повреждён или не дочитался. Сохрани копию заново и загрузи её.');
     else showBkErr('«' + f.name + '» — обычная таблица, в ней нет данных Złoty Plan. Нужен файл, который сохраняет кнопка «Сохранить в Excel»: его имя начинается с zloty-plan.');
   });
+});
+$('#bkCopy').addEventListener('click', function(){
+  var code = 'ZLOTY1:' + JSON.stringify(backupObject());
+  function done(){ cfg.lastBackup = ds(new Date()); onCfgChange(); toast('Код скопирован. Вставь его в Заметки или отправь себе'); }
+  function manual(){ var ta = $('#bkCodeIn'); ta.value = code; ta.focus(); ta.select(); toast('Код в поле ниже: выдели всё и скопируй'); }
+  try {
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(code).then(done, manual);
+    else manual();
+  } catch(_){ manual(); }
+});
+$('#bkCodeLoad').addEventListener('click', function(){
+  var t = $('#bkCodeIn').value.trim(), i = t.indexOf('ZLOTY1:');
+  $('#bkErr').hidden = true; $('#bkConfirm').hidden = true;
+  try {
+    if (i < 0) throw 0;
+    offerImport(JSON.parse(t.slice(i + 7)));
+  } catch(_){ pendingImport = null; showBkErr('Код не распознан. Скопируй его целиком: от «ZLOTY1:» до самого конца.'); }
 });
 function mergeById(dst, src){ var have = {}; dst.forEach(function(x){ have[x.id] = 1; }); src.forEach(function(x){ if (!have[x.id]) dst.push(x); }); }
 function commitAll(keys){
@@ -2283,7 +2316,7 @@ function applyImport(mode){
       months[k] = (months[k] || []).concat(inc.months[k].filter(function(i){ return !have[i.id]; }));
     });
   }
-  pendingImport = null; $('#bkConfirm').hidden = true;
+  pendingImport = null; $('#bkConfirm').hidden = true; $('#bkCodeIn').value = '';
   commitAll(keys);
   toast(mode === 'replace' ? 'Данные заменены из файла' : 'Добавлено из файла', 'Вернуть как было', function(){
     var ks = {}; Object.keys(months).forEach(function(k){ ks[k] = 1; }); Object.keys(prev.months).forEach(function(k){ ks[k] = 1; });
@@ -2403,6 +2436,7 @@ var IS_IOS = /iPad|iPhone|iPod/.test(navigator.userAgent) || (navigator.platform
   var standalone = window.navigator.standalone === true || (window.matchMedia && matchMedia('(display-mode: standalone)').matches);
   var inClaude = !!(window.claude && typeof window.claude.use === 'function');
   if (IS_IOS && !standalone && !inClaude && /^https?:$/.test(location.protocol)) $('#iosHint').hidden = false;
+  if (IS_IOS) $('#bkFile').removeAttribute('accept');
 })();
 var installEvt = null;
 window.addEventListener('beforeinstallprompt', function(e){ e.preventDefault(); installEvt = e; $('#installBtn').hidden = false; });
