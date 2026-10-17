@@ -178,7 +178,7 @@ button{font:inherit;color:inherit}
 /* ---------- layout ---------- */
 .main{display:flex;flex-direction:column;gap:16px}
 .colL,.colR{display:contents}
-.p-income{order:1}.stage{order:2}.envelopes{order:3}.p-details{order:4}.ratio{order:5}.tips-sec{order:6}.bench{order:7}
+.p-income{order:1}.stage{order:2}.envelopes{order:3}.p-details{order:4}.tips-peek{order:5}
 @media (min-width:980px){
   .main{display:grid;grid-template-columns:minmax(320px,380px) minmax(0,1fr);gap:20px;align-items:start}
   .colL,.colR{display:flex;flex-direction:column;gap:20px;min-width:0}
@@ -597,6 +597,21 @@ label.btn-sm{display:inline-flex}
 .toast button{border:0;background:transparent;color:var(--gold);font:600 13.5px/1 var(--f-body);padding:8px 10px;border-radius:10px;cursor:pointer;white-space:nowrap}
 .toast button:hover{background:var(--gold-soft)}
 
+/* ---------- tips teaser and breakdown ---------- */
+.an-open{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:14px;padding:13px 14px;border-radius:var(--r-md);border:1px solid var(--line2);
+  background:var(--surface2);color:var(--fg);text-align:left;cursor:pointer;transition:background var(--t2), transform var(--t1) var(--ease)}
+.an-open:hover{background:var(--surface3)}
+.an-open:active{transform:scale(.99)}
+.an-open b{display:block;font-weight:600;font-size:15px}
+.an-open .s{font-size:12.5px;color:var(--muted)}
+.sheet.wide{max-width:760px}
+.an-body{display:flex;flex-direction:column;gap:12px}
+.an-body .panel{background:var(--surface2);box-shadow:none;padding:18px}
+.an-body .bt{background:var(--surface)}
+#anSheet .sheet-in{min-height:min(720px, 86vh)}
+.gn-fix{display:flex;flex-direction:column;align-items:flex-start;gap:10px;margin-top:10px;padding-top:10px;border-top:1px solid var(--line)}
+.gn-fix p{color:var(--fg)}
+
 /* ---------- settings ---------- */
 .set-btn{grid-column:3;grid-row:1;width:44px;height:44px;border-radius:13px;border:1px solid var(--line);background:var(--surface);color:var(--muted);box-shadow:var(--shadow)}
 .set-btn svg{width:21px;height:21px}
@@ -851,63 +866,10 @@ label.btn-sm{display:inline-flex}
         <div class="env-grid" id="envGrid"></div>
       </section>
 
-      <section class="panel ratio" aria-labelledby="hRatio">
-        <div class="panel-head">
-          <h2 class="h2" id="hRatio">Правило 50 / 30 / 20</h2>
-          <span class="sub">нужды · желания · накопления</span>
-        </div>
-        <div class="ratio-bar">
-          <i id="rbNeeds" style="background:var(--muted)"></i>
-          <i id="rbWants" style="background:var(--c-fun)"></i>
-          <i id="rbSave" style="background:var(--c-save)"></i>
-        </div>
-        <div class="ratio-marks" aria-hidden="true"><s style="left:50%">50%</s><s style="left:80%">80%</s></div>
-        <div class="ratio-legend">
-          <div><b id="rlNeeds">—</b><span>Нужды, ориентир 50%</span></div>
-          <div><b id="rlWants">—</b><span>Желания, ориентир 30%</span></div>
-          <div><b id="rlSave">—</b><span>Накопления, ориентир 20%</span></div>
-        </div>
-      </section>
-
-      <section class="panel tips-sec" aria-labelledby="hTips">
-        <div class="panel-head"><h2 class="h2" id="hTips">Подсказки</h2><span class="sub">обновляются от твоих цифр и трат</span></div>
-        <ul class="tips" id="tips"></ul>
-      </section>
-
-      <section class="panel bench" aria-labelledby="hBench">
-        <div class="panel-head"><h2 class="h2" id="hBench">Ориентиры Польши, 2026</h2><button type="button" class="fold-btn" data-fold-btn aria-expanded="true" aria-controls="foldBench">Свернуть</button></div>
-        <p class="fold-sum" data-fold-sum hidden><span>инфляция <b>4,1%</b></span><span>минималка <b>≈ 3 606</b> на руку</span><span>средняя <b>≈ 6 640</b></span><span>данные на 16 октября 2026</span></p>
-        <div id="foldBench" data-fold-body>
-        <div class="lbl">Где твой доход на руку</div>
-        <div class="scale">
-          <div class="scale-line"></div>
-          <div class="mk" id="mkMin"><span>минималка 3 606</span></div>
-          <div class="mk" id="mkAvg"><span>средняя ≈ 6 640</span></div>
-          <div class="mk you" id="mkYou" hidden><span>ты</span></div>
-        </div>
-        <div class="bench-grid">
-          <div class="bt"><span class="lbl">Инфляция, сент.</span><b>4,1%<sup>1</sup></b><span class="d">год к году; услуги +5,3%, давит топливо</span></div>
-          <div class="bt"><span class="lbl">Минимальная</span><b>4 806 zł<sup>2</sup></b><span class="d">брутто; ≈ 3 606 zł на руку</span></div>
-          <div class="bt"><span class="lbl">Средняя, август</span><b>9 259 zł<sup>3</sup></b><span class="d">брутто в секторе предприятий; ≈ 6 640 на руку</span></div>
-          <div class="bt"><span class="lbl">Еда на одного</span><b>800–1 800<sup>4</sup></b><span class="d">эконом 800 · средне 1 200 · с кафе 1 800 zł</span></div>
-          <div class="bt"><span class="lbl">Еда на пару</span><b>≈ 2 500 zł<sup>7</sup></b><span class="d">против 1 800 у одного в Варшаве: примерно ×1,4</span></div>
-          <div class="bt"><span class="lbl">Проездной жителя</span><b>90–140 zł<sup>5</sup></b><span class="d">Wrocław 90 · Warszawa 98 · Kraków 99 · Łódź 140</span></div>
-          <div class="bt"><span class="lbl">Своя машина</span><b>от 1 200 zł<sup>6</sup></b><span class="d">против 300–500 zł за транспорт с такси</span></div>
-          <div class="bt"><span class="lbl">Частная медицина</span><b>150–500 zł<sup>7</sup></b><span class="d">страховка в месяц, Варшава; коммуналка 270–590 zł на человека</span></div>
-        </div>
-        <div class="sources">
-          Источники
-          <ol>
-            <li><a href="https://www.analizy.pl/puls-rynku/40837/inflacja-w-polsce-wrzesien-2026-drugi-odczyt" target="_blank" rel="noopener">Analizy.pl: инфляция в сентябре 2026, второй отсчёт GUS</a></li>
-            <li><a href="https://forsal.pl/gospodarka/aktualnosci/artykuly/10599913,placa-minimalna-2026-oto-dokladne-kwoty-brutto-i-netto.html" target="_blank" rel="noopener">Forsal: минимальная зарплата 2026 брутто и нетто</a></li>
-            <li><a href="https://comparic.pl/wzrost-wynagrodzen-w-polsce-hamuje-a-etatow-ubywa-gus-pokazuje-slabszy-rynek-pracy/" target="_blank" rel="noopener">Comparic: средняя зарплата, август 2026 (GUS)</a></li>
-            <li><a href="https://freenance.io/koszty-zycia/budzet-mieseczny-singiel-polska/" target="_blank" rel="noopener">Freenance: бюджет одного человека в Польше, 2026</a></li>
-            <li><a href="https://xyz.pl/droga-lodz-tani-wroclaw-tak-wygladaja-ceny-komunikacji-w-duzych-miastach/" target="_blank" rel="noopener">XYZ: цены проездных в городах, сентябрь 2026</a> и <a href="https://www.radiokrakow.pl/audycje/aleksander-miszalski-podwyzka-biletu-okresowego-to-19-zl-ile-kosztuje-piwo-w-knajpie" target="_blank" rel="noopener">Radio Kraków: Warszawa 98 zł</a></li>
-            <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-polsce-2026-podsumowanie/" target="_blank" rel="noopener">Freenance: стоимость жизни в Польше, 2026</a></li>
-            <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-warszawie-2026/" target="_blank" rel="noopener">Freenance: стоимость жизни в Варшаве, 2026</a></li>
-          </ol>
-        </div>
-        </div>
+      <section class="panel tips-peek" aria-labelledby="hPeek">
+        <div class="panel-head"><h2 class="h2" id="hPeek">Главное сейчас</h2><span class="sub" id="peekMore"></span></div>
+        <ul class="tips" id="tipsPeek"></ul>
+        <button type="button" class="an-open" id="anOpen"><span><b>Разбор бюджета</b><span class="s">все подсказки, правило 50/30/20 и цены Польши</span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       </section>
     </div>
   </main>
@@ -933,9 +895,9 @@ label.btn-sm{display:inline-flex}
           <div><span class="lbl">Конверт «Накопления»</span><b id="gcSave">0 zł</b><span class="s">в месяц</span></div>
         </div>
         <div class="meter-track"><i id="gcFill"></i></div>
-        <label class="switch-row" for="gcAuto"><span><b>Учитывать цели в плане</b><span class="s">План сам откладывает на цели, не опуская еду, транспорт и здоровье ниже минимума</span></span><input type="checkbox" id="gcAuto" role="switch" checked></label>
+        <label class="switch-row" for="gcAuto"><span><b>Учитывать цели в плане</b><span class="s">План откладывает на цели всё, что остаётся после обычных трат на еду, транспорт и здоровье</span></span><input type="checkbox" id="gcAuto" role="switch" checked></label>
         <p class="sub" id="gcText">Добавь цель: подушку, отпуск или технику. Я посчитаю, сколько откладывать в месяц.</p>
-        <div class="cover-act"><button type="button" class="btn-sm gold" id="gcLock" hidden></button></div>
+        <div class="cover-act"><button type="button" class="btn-sm gold" id="gcShift" hidden>Сдвинуть сроки</button><button type="button" class="btn-sm gold" id="gcLock" hidden></button></div>
       </div>
       <ul class="goal-list" id="goalList"></ul>
       <div class="presets" id="goalPresets"></div>
@@ -1038,6 +1000,75 @@ label.btn-sm{display:inline-flex}
   </form>
 </dialog>
 
+<dialog class="sheet wide" id="anSheet" aria-labelledby="anTitle">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <h2 class="h2" id="anTitle">Разбор бюджета</h2>
+      <button type="button" class="icon-btn" id="anClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="an-body">
+      <section class="panel tips-sec" aria-labelledby="hTips">
+        <div class="panel-head"><h2 class="h2" id="hTips">Подсказки</h2><span class="sub">обновляются от твоих цифр и трат</span></div>
+        <ul class="tips" id="tips"></ul>
+      </section>
+      <section class="panel ratio" aria-labelledby="hRatio">
+        <div class="panel-head">
+          <h2 class="h2" id="hRatio">Правило 50 / 30 / 20</h2>
+          <span class="sub">нужды · желания · накопления</span>
+        </div>
+        <div class="ratio-bar">
+          <i id="rbNeeds" style="background:var(--muted)"></i>
+          <i id="rbWants" style="background:var(--c-fun)"></i>
+          <i id="rbSave" style="background:var(--c-save)"></i>
+        </div>
+        <div class="ratio-marks" aria-hidden="true"><s style="left:50%">50%</s><s style="left:80%">80%</s></div>
+        <div class="ratio-legend">
+          <div><b id="rlNeeds">—</b><span>Нужды, ориентир 50%</span></div>
+          <div><b id="rlWants">—</b><span>Желания, ориентир 30%</span></div>
+          <div><b id="rlSave">—</b><span>Накопления, ориентир 20%</span></div>
+        </div>
+      </section>
+
+
+      <section class="panel bench" aria-labelledby="hBench">
+        <div class="panel-head"><h2 class="h2" id="hBench">Ориентиры Польши, 2026</h2><button type="button" class="fold-btn" data-fold-btn aria-expanded="true" aria-controls="foldBench">Свернуть</button></div>
+        <p class="fold-sum" data-fold-sum hidden><span>инфляция <b>4,1%</b></span><span>минималка <b>≈ 3 606</b> на руку</span><span>средняя <b>≈ 6 640</b></span><span>данные на 16 октября 2026</span></p>
+        <div id="foldBench" data-fold-body>
+        <div class="lbl">Где твой доход на руку</div>
+        <div class="scale">
+          <div class="scale-line"></div>
+          <div class="mk" id="mkMin"><span>мин 3 606</span></div>
+          <div class="mk" id="mkAvg"><span>средняя 6 640</span></div>
+          <div class="mk you" id="mkYou" hidden><span>ты</span></div>
+        </div>
+        <div class="bench-grid">
+          <div class="bt"><span class="lbl">Инфляция, сент.</span><b>4,1%<sup>1</sup></b><span class="d">год к году; услуги +5,3%, давит топливо</span></div>
+          <div class="bt"><span class="lbl">Минимальная</span><b>4 806 zł<sup>2</sup></b><span class="d">брутто; ≈ 3 606 zł на руку</span></div>
+          <div class="bt"><span class="lbl">Средняя, август</span><b>9 259 zł<sup>3</sup></b><span class="d">брутто в секторе предприятий; ≈ 6 640 на руку</span></div>
+          <div class="bt"><span class="lbl">Еда на одного</span><b>800–1 800<sup>4</sup></b><span class="d">эконом 800 · средне 1 200 · с кафе 1 800 zł</span></div>
+          <div class="bt"><span class="lbl">Еда на пару</span><b>≈ 2 500 zł<sup>7</sup></b><span class="d">против 1 800 у одного в Варшаве: примерно ×1,4</span></div>
+          <div class="bt"><span class="lbl">Проездной жителя</span><b>90–140 zł<sup>5</sup></b><span class="d">Wrocław 90 · Warszawa 98 · Kraków 99 · Łódź 140</span></div>
+          <div class="bt"><span class="lbl">Своя машина</span><b>от 1 200 zł<sup>6</sup></b><span class="d">против 300–500 zł за транспорт с такси</span></div>
+          <div class="bt"><span class="lbl">Частная медицина</span><b>150–500 zł<sup>7</sup></b><span class="d">страховка в месяц, Варшава; коммуналка 270–590 zł на человека</span></div>
+        </div>
+        <div class="sources">
+          Источники
+          <ol>
+            <li><a href="https://www.analizy.pl/puls-rynku/40837/inflacja-w-polsce-wrzesien-2026-drugi-odczyt" target="_blank" rel="noopener">Analizy.pl: инфляция в сентябре 2026, второй отсчёт GUS</a></li>
+            <li><a href="https://forsal.pl/gospodarka/aktualnosci/artykuly/10599913,placa-minimalna-2026-oto-dokladne-kwoty-brutto-i-netto.html" target="_blank" rel="noopener">Forsal: минимальная зарплата 2026 брутто и нетто</a></li>
+            <li><a href="https://comparic.pl/wzrost-wynagrodzen-w-polsce-hamuje-a-etatow-ubywa-gus-pokazuje-slabszy-rynek-pracy/" target="_blank" rel="noopener">Comparic: средняя зарплата, август 2026 (GUS)</a></li>
+            <li><a href="https://freenance.io/koszty-zycia/budzet-mieseczny-singiel-polska/" target="_blank" rel="noopener">Freenance: бюджет одного человека в Польше, 2026</a></li>
+            <li><a href="https://xyz.pl/droga-lodz-tani-wroclaw-tak-wygladaja-ceny-komunikacji-w-duzych-miastach/" target="_blank" rel="noopener">XYZ: цены проездных в городах, сентябрь 2026</a> и <a href="https://www.radiokrakow.pl/audycje/aleksander-miszalski-podwyzka-biletu-okresowego-to-19-zl-ile-kosztuje-piwo-w-knajpie" target="_blank" rel="noopener">Radio Kraków: Warszawa 98 zł</a></li>
+            <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-polsce-2026-podsumowanie/" target="_blank" rel="noopener">Freenance: стоимость жизни в Польше, 2026</a></li>
+            <li><a href="https://freenance.io/koszty-zycia/koszty-zycia-w-warszawie-2026/" target="_blank" rel="noopener">Freenance: стоимость жизни в Варшаве, 2026</a></li>
+          </ol>
+        </div>
+        </div>
+      </section>
+    </div>
+  </div>
+</dialog>
+
 <dialog class="sheet" id="setSheet" aria-labelledby="setTitle">
   <div class="sheet-in">
     <div class="sheet-head">
@@ -1061,8 +1092,9 @@ label.btn-sm{display:inline-flex}
         <label><input type="radio" name="setStrategy" value="comfort"><span>Комфорт</span></label>
       </div>
     </div>
-    <label class="switch-row set-switch" for="setGoals"><span><b>Учитывать цели в плане</b><span class="s">План сам откладывает на цели, не опуская еду, транспорт и здоровье ниже минимума</span></span><input type="checkbox" id="setGoals" role="switch"></label>
+    <label class="switch-row set-switch" for="setGoals"><span><b>Учитывать цели в плане</b><span class="s">План откладывает на цели всё, что остаётся после обычных трат на еду, транспорт и здоровье</span></span><input type="checkbox" id="setGoals" role="switch"></label>
     <div class="set-list">
+      <button type="button" class="set-item" id="setAnalysis"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7.5 16.5v-5M12 16.5V6.5M16.5 16.5v-8"/></svg></span><span class="st"><b>Разбор бюджета</b><span class="s">подсказки, 50/30/20, цены Польши</span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" data-go="income"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/></svg></span><span class="st"><b>Зарплата и жильё</b><span class="s" id="setSumIncome"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" data-go="details"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span><span class="st"><b>Город, транспорт, связь</b><span class="s" id="setSumDetails"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" data-go="fund"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="4" rx="1"/><path d="M12 8v13M5.5 12v7.5A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V12M12 8C10.5 4.5 7 4.5 7 6.8 7 8 9 8 12 8zm0 0c1.5-3.5 5-3.5 5-1.2C17 8 15 8 12 8z"/></svg></span><span class="st"><b>Фонд редких трат</b><span class="s" id="setSumFund"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
@@ -1075,7 +1107,7 @@ label.btn-sm{display:inline-flex}
       <p>Удалить все цифры, траты, цели и историю? Перед этим лучше сохранить копию в Excel. Сразу после сброса его можно отменить кнопкой «Вернуть».</p>
       <div class="bk-actions"><button type="button" class="btn-sm danger" id="setResetYes">Сбросить</button><button type="button" class="btn-sm" id="setResetNo">Отмена</button></div>
     </div>
-    <p class="set-about"><b>Złoty Plan</b> · версия 2.0<br><span id="setStore"></span><br>Расчёт по средним ценам Польши на октябрь 2026. Это ориентир, а не финансовая консультация.</p>
+    <p class="set-about"><b>Złoty Plan</b> · версия 2.1<br><span id="setStore"></span><br>Расчёт по средним ценам Польши на октябрь 2026. Это ориентир, а не финансовая консультация.</p>
   </div>
 </dialog>
 
@@ -1389,18 +1421,18 @@ function allocate(inp){
   }
   ess.forEach(function(c){ a[c] = lv[c].min; });
   var rem = avail - mins, st = STRAT[inp.strategy] || STRAT.balance;
-  var gNeed = inp.goalNeed || 0;
-  if (gNeed > 0 && !isL('save')){
-    if (!isL('fun')){ var fm = Math.min(lv.fun.min, rem); a.fun += fm; rem -= fm; }
-    var gr = Math.min(gNeed, rem); a.save += gr; rem -= gr; res.goalRes = r2(gr);
-  }
+  var gNeed = inp.goalNeed || 0, gDone = !(gNeed > 0) || isL('save'), seenGroc = false;
+  function goalTopUp(){ gDone = true; var add = Math.min(Math.max(0, gNeed - a.save), Math.max(0, rem)); a.save += add; rem -= add; }
   st.steps.forEach(function(s){
     var cat = s[0], t = s[1];
+    if (!gDone && seenGroc && (cat === 'fun' || cat === 'save')) goalTopUp();
+    if (cat === 'groc') seenGroc = true;
     if (rem <= 0 || isL(cat)) return;
     var target = cat === 'save' ? t*S : (typeof t === 'string' ? lv[cat][t] : t);
     var add = Math.min(Math.max(0, target - a[cat]), rem);
     a[cat] += add; rem -= add;
   });
+  if (!gDone) goalTopUp();
   if (rem > 0){
     var keys = Object.keys(st.surplus).filter(function(c){ return !isL(c); });
     var tw = keys.reduce(function(s, c){ return s + st.surplus[c]; }, 0);
@@ -1723,6 +1755,8 @@ function renderGoals(){
     ul.appendChild(li);
   });
 }
+$('#goalNote').addEventListener('click', function(e){ if (e.target.closest('[data-shift]')) applyShift(); });
+$('#gcShift').addEventListener('click', applyShift);
 $('#gcAuto').addEventListener('change', function(){
   cfg.goalsAuto = this.checked; onCfgChange();
   toast(this.checked ? 'Цели учитываются в плане' : 'Цели больше не меняют план');
@@ -1901,7 +1935,7 @@ function buildTips(inp, res, sp, P, G){
   if (sp.by.other > 0) out.push(['info','На «Другое» ушло <b>'+money(sp.by.other)+' zł</b>. Это вычитается из накоплений: фактически отложится ≈ <b>'+money(Math.max(0, a.save - sp.by.other))+' zł</b>.']);
   if (G.count && G.need > 0 && res.state !== 'deficit'){
     if (a.save + .001 < G.need){
-      if (cfg.goalsAuto){ var eta = etaText(a.save); out.push(['warn','На цели нужно <b>'+money(G.need)+' zł</b> в месяц, а в план помещается <b>'+money(a.save)+' zł</b>, если не опускать еду, транспорт и здоровье ниже минимума. Сдвинь сроки или уменьши цели' + (eta ? ': при таком темпе всё соберётся примерно <b>'+eta+'</b>.' : '.')]); }
+      if (cfg.goalsAuto){ var sd = suggestDates(a.save); out.push(['warn','На цели нужно <b>'+money(G.need)+' zł</b> в месяц, а после обычных трат остаётся <b>'+money(a.save)+' zł</b>.' + (sd ? ' Реальные сроки: ' + esc(shiftText(sd)) + '. Сдвинуть их можно одной кнопкой под кольцом.' : ' Попробуй стратегию «Экономно» или уменьши суммы целей.')]); }
       else out.push(['warn','На цели нужно <b>'+money(G.need)+' zł</b> в месяц, а в накоплениях <b>'+money(a.save)+' zł</b>. Во вкладке «Цели» можно включить учёт целей в плане или сдвинуть сроки.']);
     }
     else out.push(['ok', cfg.goalsAuto ? 'План откладывает на цели <b>'+money(G.need)+' zł</b> в месяц, этого хватает, чтобы успеть к срокам.' : 'Накоплений хватает на все цели: нужно <b>'+money(G.need)+' zł</b> в месяц, откладывается <b>'+money(a.save)+' zł</b>.']);
@@ -1963,23 +1997,49 @@ function recordHist(inp, res, P){
   saveLocal(); if (remoteReady()) scheduleCfgSave();
 }
 function catName(k){ return k === 'save' && last && last.vals.goal > 0 ? 'Свободные накопления' : CAT[k].name; }
-function goalsLeft(){ var r = 0; cfg.goals.forEach(function(g){ var gi = goalInfo(g); if (gi.t > gi.s) r += gi.t - gi.s; }); return r; }
-function etaText(monthly){
-  if (!(monthly > 0)) return '';
-  var n = Math.ceil(goalsLeft()/monthly), d = new Date(); d = new Date(d.getFullYear(), d.getMonth() + n, 1);
-  return 'к ' + MONTHS_GEN[d.getMonth()].replace(/я$/, 'ю').replace(/а$/, 'у') + ' ' + d.getFullYear();
+function suggestDates(A){
+  var items = cfg.goals.map(function(g){ var gi = goalInfo(g); return {g:g, rem:gi.t - gi.s, n:gi.n}; }).filter(function(x){ return x.rem > 0; });
+  if (!items.length || !(A >= 1)) return null;
+  function need(x){ return Math.ceil(x.rem / x.n); }
+  function tot(){ return items.reduce(function(s, x){ return s + need(x); }, 0); }
+  var f = tot() / A;
+  if (f > 1) items.forEach(function(x){ x.n = Math.ceil(x.n * f); });
+  var guard = 0;
+  while (tot() > A && guard++ < 3000){ var big = items.reduce(function(b, x){ return need(x) > need(b) ? x : b; }); big.n++; }
+  var now = new Date(), base = now.getFullYear()*12 + now.getMonth();
+  items.forEach(function(x){ var idx = base + x.n; x.y = Math.floor(idx/12); x.m = idx % 12 + 1; });
+  return items;
+}
+function dateTo(y, m){ return 'к ' + MONTHS_GEN[m - 1].replace(/я$/, 'ю').replace(/а$/, 'у') + ' ' + y; }
+var shiftPlan = null;
+function shiftText(items){
+  return items.map(function(x){ return '«' + (x.g.name || 'Цель') + '» ' + dateTo(x.y, x.m); }).join(', ');
+}
+function applyShift(){
+  if (!shiftPlan) return;
+  var before = cfg.goals.map(function(g){ return [g.id, g.byM, g.byY]; });
+  shiftPlan.forEach(function(x){ x.g.byM = x.m; x.g.byY = x.y; });
+  renderGoals(); onCfgChange();
+  toast('Сроки целей сдвинуты', 'Вернуть', function(){
+    before.forEach(function(b){ var g = cfg.goals.filter(function(x){ return x.id === b[0]; })[0]; if (g){ g.byM = b[1]; g.byY = b[2]; } });
+    renderGoals(); onCfgChange();
+  });
 }
 function renderGoalNote(G, vals, res, S){
   var box = $('#goalNote');
   if (!(G.need > 0) || S <= 0 || res.state === 'deficit' || res.state === 'empty'){ box.hidden = true; return; }
   var cov = vals.goal, short = r2(G.need - cov), p = clamp(cov/G.need, 0, 1);
-  var txt;
+  var txt, extra = '';
+  shiftPlan = short >= 1 ? suggestDates(cov) : null;
   if (short < 1) txt = 'Все цели укладываются в план и соберутся к своим срокам.';
-  else if (cfg.goalsAuto) txt = 'Не хватает ' + money(short) + ' zł в месяц: больше не отложить, не опуская еду, транспорт и здоровье ниже минимума.' + (cov > 0 ? ' При таком темпе цели соберутся примерно ' + etaText(cov) + '.' : '');
-  else txt = 'Не хватает ' + money(short) + ' zł в месяц. Во вкладке «Цели» можно включить автоматический учёт целей.';
+  else if (!(cov >= 1)) txt = 'Цели не помещаются: после обычных трат на них ничего не остаётся. Попробуй стратегию «Экономно» или уменьши суммы целей.';
+  else {
+    txt = 'Цели не помещаются в сроки: на них остаётся ' + money(cov) + ' zł в месяц, а нужно ' + money(G.need) + '.' + (cfg.goalsAuto ? '' : ' Можно включить учёт целей во вкладке «Цели».');
+    if (shiftPlan) extra = '<div class="gn-fix"><p>Реальные сроки при этих цифрах: ' + esc(shiftText(shiftPlan)) + '.</p><button type="button" class="btn-sm gold" data-shift>Сдвинуть сроки</button></div>';
+  }
   box.hidden = false;
   box.innerHTML = '<div class="gn-top"><span>На цели</span><span><b>' + money(cov) + '</b> из ' + money(G.need) + ' zł</span></div>' +
-    '<div class="gn-bar' + (short < 1 ? ' full' : '') + '" aria-hidden="true"><i style="width:' + (p*100).toFixed(1) + '%"></i></div><p>' + esc(txt) + '</p>';
+    '<div class="gn-bar' + (short < 1 ? ' full' : '') + '" aria-hidden="true"><i style="width:' + (p*100).toFixed(1) + '%"></i></div><p>' + esc(txt) + '</p>' + extra;
 }
 function goalsTotal(){
   var need = 0; cfg.goals.forEach(function(g){ need += goalInfo(g).need; });
@@ -2100,9 +2160,14 @@ function render(){
   $('#rlWants').textContent = S > 0 ? pc(wants/S)+'%' : '—';
   $('#rlSave').textContent = S > 0 ? pc(sv/S)+'%' : '—';
 
-  $('#tips').innerHTML = buildTips(inp, res, sp, P, G).map(function(t){
-    return '<li><span class="tip-tag t-'+t[0]+'">'+TAG[t[0]]+'</span><p>'+t[1]+'</p></li>';
-  }).join('');
+  var tipList = buildTips(inp, res, sp, P, G);
+  function tipLi(t){ return '<li><span class="tip-tag t-'+t[0]+'">'+TAG[t[0]]+'</span><p>'+t[1]+'</p></li>'; }
+  $('#tips').innerHTML = tipList.map(tipLi).join('');
+  var RANK = {bad:0, warn:1, info:2, ok:3};
+  var top = tipList.map(function(t, i){ return [t, i]; }).sort(function(x, y){ return (RANK[x[0][0]] - RANK[y[0][0]]) || (x[1] - y[1]); }).slice(0, 2);
+  $('#tipsPeek').innerHTML = top.map(function(x){ return tipLi(x[0]); }).join('');
+  var more = tipList.length - top.length;
+  $('#peekMore').textContent = more > 0 ? 'ещё ' + more + ' ' + plural(more, 'подсказка', 'подсказки', 'подсказок') : '';
 
   var smax = Math.max(12000, S*1.15);
   function place(id, v){ var el = $(id), p = clamp(v/smax*100, 0, 100); el.style.left = p+'%'; el.classList.toggle('edgeL', p < 8); el.classList.toggle('edgeR', p > 92); }
@@ -2256,14 +2321,17 @@ function renderGoalsView(inp, res, P, sp, G){
   gf.style.width = (G.need > 0 ? clamp(save/G.need, 0, 1)*100 : (G.count ? 100 : 0)).toFixed(1)+'%';
   gf.classList.toggle('over', G.need > 0 && save + .001 < G.need);
   var lockBtn = $('#gcLock'); lockBtn.hidden = true;
+  var shiftBtn = $('#gcShift'); shiftBtn.hidden = true;
   $('#gcAuto').checked = !!cfg.goalsAuto;
   if (!G.count) $('#gcText').textContent = 'Добавь цель: подушку, отпуск или технику. Я посчитаю, сколько откладывать в месяц.';
   else if (G.need === 0) $('#gcText').textContent = 'Все цели собраны или ещё без суммы.';
   else if (inp.S <= 0) $('#gcText').textContent = 'Впиши зарплату во вкладке «План», чтобы сравнить с накоплениями.';
   else if (save + .001 >= G.need) $('#gcText').textContent = 'Накоплений хватает на все цели' + (save - G.need >= 1 ? ', ещё остаётся ' + money(save - G.need) + ' zł в месяц.' : '.');
   else if (cfg.goalsAuto){
-    var eta2 = etaText(save);
-    $('#gcText').textContent = 'Не хватает ' + money(G.need - save) + ' zł в месяц. План уже откладывает на цели всё, что можно, не опуская еду, транспорт и здоровье ниже минимума. Сдвинь сроки или уменьши цели' + (eta2 ? ': при таком темпе всё соберётся примерно ' + eta2 + '.' : '.');
+    var plan2 = suggestDates(Math.min(save, G.need));
+    $('#gcText').textContent = 'Не хватает ' + money(G.need - save) + ' zł в месяц. План уже отдаёт на цели всё, что остаётся после обычных трат.' +
+      (plan2 ? ' Реальные сроки при этих цифрах: ' + shiftText(plan2) + '.' : ' Попробуй стратегию «Экономно» или уменьши суммы целей.');
+    if (plan2){ shiftBtn.hidden = false; shiftPlan = plan2; }
   } else {
     $('#gcText').textContent = 'Не хватает ' + money(G.need - save) + ' zł в месяц. Включи учёт целей в плане, закрепи накопления на нужную сумму (остальные конверты уменьшатся) или сдвинь сроки.';
     lockBtn.hidden = false; lockBtn.textContent = 'Закрепить накопления на ' + money(G.need) + ' zł'; lockBtn.setAttribute('data-amt', G.need);
@@ -2748,6 +2816,14 @@ $('#city').addEventListener('change', function(){ cfg.city = this.value; onCfgCh
 document.addEventListener('visibilitychange', function(){ if (!document.hidden && last && last.day !== ds(new Date())) render(); });
 setInterval(function(){ if (last && last.day !== ds(new Date())) render(); }, 60000);
 
+/* ---------- budget breakdown ---------- */
+var anSheet = $('#anSheet');
+function openAnalysis(){ if (typeof anSheet.showModal === 'function'){ if (!anSheet.open) anSheet.showModal(); } else anSheet.setAttribute('open', ''); anSheet.querySelector('.sheet-in').scrollTop = 0; }
+function closeAnalysis(){ if (anSheet.open || anSheet.hasAttribute('open')){ if (typeof anSheet.close === 'function') anSheet.close(); else anSheet.removeAttribute('open'); } }
+$('#anOpen').addEventListener('click', openAnalysis);
+$('#anClose').addEventListener('click', closeAnalysis);
+anSheet.addEventListener('click', function(e){ if (e.target === anSheet) closeAnalysis(); });
+
 /* ---------- settings ---------- */
 var THEME_KEY = 'zloty-plan-theme', setSheet = $('#setSheet');
 var themeMetas = $$('meta[name="theme-color"]').map(function(m){ return [m, m.getAttribute('content')]; });
@@ -2781,6 +2857,7 @@ function openSettings(){
 }
 function closeSettings(){ if (setSheet.open || setSheet.hasAttribute('open')){ if (typeof setSheet.close === 'function') setSheet.close(); else setSheet.removeAttribute('open'); } }
 $('#setBtn').addEventListener('click', openSettings);
+$('#setAnalysis').addEventListener('click', function(){ closeSettings(); openAnalysis(); });
 $('#setClose').addEventListener('click', closeSettings);
 setSheet.addEventListener('click', function(e){ if (e.target === setSheet) closeSettings(); });
 $$('input[name="theme"]').forEach(function(r){ r.addEventListener('change', function(){
