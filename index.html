@@ -1041,6 +1041,8 @@ function withRetry(op){
 function setStatus(){
   $('#storeStatus').textContent = Store.mode === 'db'
     ? 'Цифры, траты и цели сохраняются в твоём аккаунте: видишь их только ты, с любого устройства.'
+    : window.Capacitor && window.Capacitor.isNativePlatform && window.Capacitor.isNativePlatform()
+      ? 'Цифры, траты и цели хранятся в приложении на этом телефоне. Раз в месяц сохраняй копию в Excel.'
     : (/^(content|file):$/.test(location.protocol)
       ? 'Страница открыта как файл: браузер может не запомнить данные. Сохраняй копию в Excel во вкладке «История».'
       : 'Цифры, траты и цели сохраняются в этом браузере.');
@@ -2206,7 +2208,22 @@ function buildWorkbook(X){
   wb.Workbook = {Sheets: wb.SheetNames.map(function(n){ return {Hidden: n === '_backup' ? 1 : 0}; })};
   return X.write(wb, {bookType:'xlsx', type:'array'});
 }
+function nativeApp(){ var C = window.Capacitor; return !!(C && C.isNativePlatform && C.isNativePlatform() && C.Plugins && C.Plugins.Filesystem && C.Plugins.Share); }
+function blobToBase64(blob){
+  return new Promise(function(res, rej){ var r = new FileReader(); r.onload = function(){ res(String(r.result).split(',')[1] || ''); }; r.onerror = rej; r.readAsDataURL(blob); });
+}
 function saveFile(filename, blob){
+  if (nativeApp()){
+    var P = window.Capacitor.Plugins;
+    return blobToBase64(blob).then(function(b64){
+      return P.Filesystem.writeFile({path:filename, data:b64, directory:'CACHE'});
+    }).then(function(w){
+      return P.Share.share({title:filename, url:w.uri, dialogTitle:'Сохранить копию'});
+    }).then(function(){ return {status:'saved'}; }, function(e){
+      if (e && /cancel/i.test(String(e.message || e))) throw {code:'declined'};
+      throw e;
+    });
+  }
   var cl = window.claude;
   if (cl && typeof cl.use === 'function'){
     return cl.use('downloads').then(function(dl){

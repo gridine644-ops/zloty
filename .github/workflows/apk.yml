@@ -1,0 +1,80 @@
+name: Build APK
+
+on:
+  push:
+    branches: [main]
+    paths: ['index.html', 'app/**', '.github/workflows/apk.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: apk
+  cancel-in-progress: true
+
+jobs:
+  apk:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+
+      - name: Web part and Android project
+        working-directory: app
+        run: |
+          set -o pipefail
+          pip install --quiet pillow 2>&1 | tee -a ../build.log
+          npm install --no-audit --no-fund 2>&1 | tee -a ../build.log
+          python3 build.py www 2>&1 | tee -a ../build.log
+          npx cap add android 2>&1 | tee -a ../build.log
+          python3 build.py android 2>&1 | tee -a ../build.log
+          npx cap sync android 2>&1 | tee -a ../build.log
+
+      - name: Gradle build
+        working-directory: app/android
+        run: |
+          set -o pipefail
+          chmod +x gradlew
+          ./gradlew assembleRelease --no-daemon --stacktrace 2>&1 | tee -a ../../build.log
+
+      - name: Sign APK
+        working-directory: app/android/app/build/outputs/apk/release
+        run: |
+          set -o pipefail
+          BT=$(ls -d "$ANDROID_HOME"/build-tools/* | sort -V | tail -1)
+          "$BT/zipalign" -p -f 4 app-release-unsigned.apk aligned.apk 2>&1 | tee -a "$GITHUB_WORKSPACE/build.log"
+          "$BT/apksigner" sign --ks "$GITHUB_WORKSPACE/app/zloty.keystore" --ks-pass pass:zlotyplan --ks-key-alias zloty --out ZlotyPlan.apk aligned.apk 2>&1 | tee -a "$GITHUB_WORKSPACE/build.log"
+          "$BT/apksigner" verify ZlotyPlan.apk 2>&1 | tee -a "$GITHUB_WORKSPACE/build.log"
+          cp ZlotyPlan.apk "$GITHUB_WORKSPACE/ZlotyPlan.apk"
+
+      - name: Publish release
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: v1.${{ github.run_number }}
+          name: Złoty Plan 1.${{ github.run_number }}
+          body: Скачай ZlotyPlan.apk на телефон и открой его, чтобы установить или обновить приложение.
+          files: ZlotyPlan.apk
+          make_latest: true
+
+      - name: Save build log when something fails
+        if: failure()
+        run: |
+          touch build.log
+          cp build.log /tmp/build.log
+          git config user.name "apk-build"
+          git config user.email "apk-build@users.noreply.github.com"
+          git checkout --orphan ci-logs
+          git rm -rf --cached . > /dev/null
+          cp /tmp/build.log build.log
+          git add build.log
+          git commit -m "Build log for run ${{ github.run_number }}"
+          git push -f origin ci-logs
