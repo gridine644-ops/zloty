@@ -81,7 +81,7 @@ def patch_android():
     colors = os.path.join(res, 'values', 'colors.xml')
     if os.path.exists(colors):
         txt = open(colors, encoding='utf-8').read()
-        txt = re.sub(r'(name="colorPrimary(?:Dark)?">)#[0-9A-Fa-f]{6,8}', r'\g<1>#0C1315', txt)
+        txt = re.sub(r'(name="colorPrimary(?:Dark)?">)#[0-9A-Fa-f]{6,8}', r'\g<1>#091012', txt)
         txt = re.sub(r'(name="colorAccent">)#[0-9A-Fa-f]{6,8}', r'\g<1>#E6BC5E', txt)
         open(colors, 'w', encoding='utf-8').write(txt)
     gradle = os.path.join(HERE, 'android', 'app', 'build.gradle')
