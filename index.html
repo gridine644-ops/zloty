@@ -25,7 +25,7 @@
   --line:#1F2C30; --line2:#2A3A3F;
   --fg:#EDF2EF; --muted:#97A8A3; --faint:#647672;
   --gold:#F2C14E; --gold-ink:#1C1404; --gold-soft:rgba(242,193,78,.12);
-  --ok:#5ED3A0; --warn:#F2B25C; --bad:#FF7B6E; --info:#7DB6FF;
+  --ok:#5ED3A0; --warn:#F2B25C; --bad:#FF7B6E; --on-bad:#2B0A06; --info:#7DB6FF;
   --c-rent:#F2846A; --c-com:#9C92FF; --c-oblig:#C995E8; --c-fund:#B8CE72; --c-groc:#5FD6A2;
   --c-trans:#6EAEFF; --c-health:#35C8C0; --c-fun:#FF8CBD; --c-save:#F2C14E; --c-goal:#E8923A; --c-free:#5A6C68;
   --ch-plan:#3C4F55; --ch-fact:#F2C14E;
@@ -48,7 +48,7 @@
     --line:#E0E6E2; --line2:#CDD6D1;
     --fg:#0F1B17; --muted:#56675F; --faint:#88968F;
     --gold:#B07C08; --gold-ink:#FFF9EA; --gold-soft:rgba(176,124,8,.10);
-    --ok:#178A55; --warn:#B26C0C; --bad:#D2433A; --info:#2C6EC2;
+    --ok:#178A55; --warn:#B26C0C; --bad:#D2433A; --on-bad:#FFFFFF; --info:#2C6EC2;
     --c-rent:#D9603F; --c-com:#6A5DE0; --c-oblig:#9A58C4; --c-fund:#6E8A1D; --c-groc:#1C9C69;
     --c-trans:#2D79D6; --c-health:#0D968E; --c-fun:#D8467E; --c-save:#BE880B; --c-goal:#B8640C; --c-free:#A3AFAA;
     --ch-plan:#CBD5D0; --ch-fact:#BE880B;
@@ -65,7 +65,7 @@
   --line:#E0E6E2; --line2:#CDD6D1;
   --fg:#0F1B17; --muted:#56675F; --faint:#88968F;
   --gold:#B07C08; --gold-ink:#FFF9EA; --gold-soft:rgba(176,124,8,.10);
-  --ok:#178A55; --warn:#B26C0C; --bad:#D2433A; --info:#2C6EC2;
+  --ok:#178A55; --warn:#B26C0C; --bad:#D2433A; --on-bad:#FFFFFF; --info:#2C6EC2;
   --c-rent:#D9603F; --c-com:#6A5DE0; --c-oblig:#9A58C4; --c-fund:#6E8A1D; --c-groc:#1C9C69;
   --c-trans:#2D79D6; --c-health:#0D968E; --c-fun:#D8467E; --c-save:#BE880B; --c-goal:#B8640C; --c-free:#A3AFAA;
   --ch-plan:#CBD5D0; --ch-fact:#BE880B;
@@ -105,7 +105,7 @@ button{font:inherit;color:inherit}
 .vh{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
 
 /* ---------- header ---------- */
-.top{display:grid;grid-template-columns:auto minmax(0,1fr);align-items:center;column-gap:14px;row-gap:12px;margin-bottom:20px}
+.top{display:grid;grid-template-columns:auto minmax(0,1fr) auto;align-items:center;column-gap:14px;row-gap:12px;margin-bottom:20px}
 .brand{display:contents}
 .logo{width:48px;height:48px;border-radius:13px;display:block;
   box-shadow:0 0 0 1px rgba(255,255,255,.06), 0 6px 18px -6px rgba(0,0,0,.6)}
@@ -568,6 +568,7 @@ label.btn-sm{display:inline-flex}
 .sheet-in{position:relative;background:var(--surface);border:1px solid var(--line);border-bottom:0;border-radius:28px 28px 0 0;
   padding-top:26px;padding-left:max(20px, env(safe-area-inset-left, 0px));padding-right:max(20px, env(safe-area-inset-right, 0px));padding-bottom:calc(20px + env(safe-area-inset-bottom, 0px));
   display:flex;flex-direction:column;gap:18px;box-shadow:var(--shadow-up);max-height:94vh;overflow:auto}
+.sheet-in>*{flex-shrink:0}
 .sheet-in::before{content:"";position:absolute;top:9px;left:50%;width:38px;height:4px;margin-left:-19px;border-radius:4px;background:var(--line2)}
 @media (min-width:700px){.sheet-in{border-radius:28px;border-bottom:1px solid var(--line);padding-top:22px}.sheet-in::before{display:none}}
 .sheet[open] .sheet-in{animation:sheetup var(--t3) var(--ease)}
@@ -596,6 +597,31 @@ label.btn-sm{display:inline-flex}
 .toast button{border:0;background:transparent;color:var(--gold);font:600 13.5px/1 var(--f-body);padding:8px 10px;border-radius:10px;cursor:pointer;white-space:nowrap}
 .toast button:hover{background:var(--gold-soft)}
 
+/* ---------- settings ---------- */
+.set-btn{grid-column:3;grid-row:1;width:44px;height:44px;border-radius:13px;border:1px solid var(--line);background:var(--surface);color:var(--muted);box-shadow:var(--shadow)}
+.set-btn svg{width:21px;height:21px}
+.set-btn:hover{color:var(--fg);background:var(--surface2)}
+.set-btn:active svg{transform:rotate(45deg);transition:transform var(--t2) var(--ease)}
+.set-switch{order:0;padding:14px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface2)}
+.set-list{display:flex;flex-direction:column;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface2);overflow:hidden}
+.set-item{display:grid;grid-template-columns:36px minmax(0,1fr) auto;align-items:center;gap:12px;width:100%;padding:12px 14px;border:0;background:transparent;text-align:left;cursor:pointer;transition:background var(--t2)}
+.set-item+.set-item{border-top:1px solid var(--line)}
+.set-item:hover,.set-item:active{background:var(--surface3)}
+.si{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:var(--gold-soft);color:var(--gold)}
+.si svg{width:19px;height:19px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.st{min-width:0}
+.st b{display:block;font-weight:600;font-size:15px;line-height:1.3}
+.st .s{margin-top:2px;font-size:12.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.chev{width:16px;height:16px;fill:none;stroke:var(--faint);stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+.set-item.danger .si{color:var(--bad);background:color-mix(in srgb, var(--bad) 12%, transparent)}
+.set-item.danger b{color:var(--bad)}
+.set-confirm{padding:14px;border-radius:var(--r-md);border:1px solid color-mix(in srgb, var(--bad) 45%, transparent);background:color-mix(in srgb, var(--bad) 8%, transparent)}
+.set-confirm p{font-size:14px}
+.set-confirm .bk-actions{margin-top:12px}
+.btn-sm.danger{background:var(--bad);color:var(--on-bad);border-color:transparent}
+.set-about{font-size:12.5px;line-height:1.6;color:var(--faint);text-align:center;padding:2px 8px 0}
+.set-about b{color:var(--muted);font-weight:600}
+
 /* iPhone: fields under 16px make Safari zoom in on focus */
 @supports (-webkit-touch-callout: none){
   .text-in,.select,.select.sm,.ob-name{font-size:16px}
@@ -608,6 +634,7 @@ label.btn-sm{display:inline-flex}
     padding-block:18px calc(var(--tabbar-h, 64px) + 40px)}
   .top{margin-bottom:16px;column-gap:12px}
   .logo{width:40px;height:40px;border-radius:11px}
+  .set-btn{width:40px;height:40px;border-radius:12px}
   .brand h1{font-size:24px}
   body.has-data .brand > p:first-of-type{display:none}
   .main,.spend,.goals,.history{gap:12px}
@@ -642,6 +669,7 @@ label.btn-sm{display:inline-flex}
 </head>
 <body>
 
+<script>try{var zt=localStorage.getItem('zloty-plan-theme');if(zt==='light'||zt==='dark')document.documentElement.setAttribute('data-theme',zt)}catch(e){}</script>
 
 <div class="page">
   <header class="top">
@@ -652,6 +680,7 @@ label.btn-sm{display:inline-flex}
       <button type="button" class="install-btn" id="installBtn" hidden>Установить на телефон</button>
       <p class="ios-hint" id="iosHint" hidden>Чтобы поставить на iPhone как приложение: внизу Safari нажми <b>Поделиться</b> → <b>На экран «Домой»</b>.</p>
     </div>
+    <button type="button" class="icon-btn set-btn" id="setBtn" aria-label="Настройки" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 4.3c.4-1.7 3-1.7 3.4 0a1.7 1.7 0 0 0 2.6 1.1c1.5-.9 3.3.8 2.4 2.4a1.7 1.7 0 0 0 1 2.5c1.8.4 1.8 3 0 3.4a1.7 1.7 0 0 0-1 2.6c.9 1.5-.9 3.3-2.4 2.4a1.7 1.7 0 0 0-2.6 1c-.4 1.8-3 1.8-3.4 0a1.7 1.7 0 0 0-2.6-1c-1.5.9-3.3-.9-2.4-2.4a1.7 1.7 0 0 0-1-2.6c-1.8-.4-1.8-3 0-3.4a1.7 1.7 0 0 0 1-2.5c-.9-1.6.9-3.3 2.4-2.4 1 .6 2.3.1 2.6-1.1z"/><circle cx="12" cy="12" r="3"/></svg></button>
   </header>
 
   <section class="panel today" aria-labelledby="tdLbl">
@@ -1007,6 +1036,47 @@ label.btn-sm{display:inline-flex}
     <div class="note-chips" id="exNotes" aria-label="Недавние заметки"></div>
     <button type="submit" class="btn-primary">Записать</button>
   </form>
+</dialog>
+
+<dialog class="sheet" id="setSheet" aria-labelledby="setTitle">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <h2 class="h2" id="setTitle">Настройки</h2>
+      <button type="button" class="icon-btn" id="setClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="field">
+      <span class="lbl" id="themeLbl">Тема</span>
+      <div class="seg" role="radiogroup" aria-labelledby="themeLbl">
+        <label><input type="radio" name="theme" id="th-system" value="system"><span>Авто</span></label>
+        <label><input type="radio" name="theme" id="th-light" value="light"><span>Светлая</span></label>
+        <label><input type="radio" name="theme" id="th-dark" value="dark"><span>Тёмная</span></label>
+      </div>
+      <span class="hint">«Авто» повторяет тему телефона.</span>
+    </div>
+    <div class="field">
+      <span class="lbl" id="setStratLbl">Стратегия распределения</span>
+      <div class="seg" role="radiogroup" aria-labelledby="setStratLbl">
+        <label><input type="radio" name="setStrategy" value="econ"><span>Экономно</span></label>
+        <label><input type="radio" name="setStrategy" value="balance"><span>Баланс</span></label>
+        <label><input type="radio" name="setStrategy" value="comfort"><span>Комфорт</span></label>
+      </div>
+    </div>
+    <label class="switch-row set-switch" for="setGoals"><span><b>Учитывать цели в плане</b><span class="s">План сам откладывает на цели, не опуская еду, транспорт и здоровье ниже минимума</span></span><input type="checkbox" id="setGoals" role="switch"></label>
+    <div class="set-list">
+      <button type="button" class="set-item" data-go="income"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/></svg></span><span class="st"><b>Зарплата и жильё</b><span class="s" id="setSumIncome"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" class="set-item" data-go="details"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span><span class="st"><b>Город, транспорт, связь</b><span class="s" id="setSumDetails"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" class="set-item" data-go="fund"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="8" width="16" height="4" rx="1"/><path d="M12 8v13M5.5 12v7.5A1.5 1.5 0 0 0 7 21h10a1.5 1.5 0 0 0 1.5-1.5V12M12 8C10.5 4.5 7 4.5 7 6.8 7 8 9 8 12 8zm0 0c1.5-3.5 5-3.5 5-1.2C17 8 15 8 12 8z"/></svg></span><span class="st"><b>Фонд редких трат</b><span class="s" id="setSumFund"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+      <button type="button" class="set-item" data-go="backup"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18a4.5 4.5 0 0 1-.5-9 6 6 0 0 1 11.5 1.5A3.8 3.8 0 0 1 17.5 18"/><path d="M12 12v8M9 15l3-3 3 3"/></svg></span><span class="st"><b>Резервная копия</b><span class="s" id="setSumBackup"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
+    </div>
+    <div class="set-list">
+      <button type="button" class="set-item danger" id="setReset"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h16M10 11v6M14 11v6M5.5 7l1 12a2 2 0 0 0 2 1.8h7a2 2 0 0 0 2-1.8l1-12M9 7V4.5h6V7"/></svg></span><span class="st"><b>Сбросить все данные</b><span class="s">зарплата, траты, цели и история</span></span></button>
+    </div>
+    <div class="set-confirm" id="setResetBox" hidden>
+      <p>Удалить все цифры, траты, цели и историю? Перед этим лучше сохранить копию в Excel. Сразу после сброса его можно отменить кнопкой «Вернуть».</p>
+      <div class="bk-actions"><button type="button" class="btn-sm danger" id="setResetYes">Сбросить</button><button type="button" class="btn-sm" id="setResetNo">Отмена</button></div>
+    </div>
+    <p class="set-about"><b>Złoty Plan</b> · версия 2.0<br><span id="setStore"></span><br>Расчёт по средним ценам Польши на октябрь 2026. Это ориентир, а не финансовая консультация.</p>
+  </div>
 </dialog>
 
 <div class="toast" id="toast" role="status" hidden><span id="toastMsg"></span><button type="button" id="toastAct" hidden></button></div>
@@ -2677,6 +2747,77 @@ $('#city').addEventListener('change', function(){ cfg.city = this.value; onCfgCh
 });
 document.addEventListener('visibilitychange', function(){ if (!document.hidden && last && last.day !== ds(new Date())) render(); });
 setInterval(function(){ if (last && last.day !== ds(new Date())) render(); }, 60000);
+
+/* ---------- settings ---------- */
+var THEME_KEY = 'zloty-plan-theme', setSheet = $('#setSheet');
+var themeMetas = $$('meta[name="theme-color"]').map(function(m){ return [m, m.getAttribute('content')]; });
+function applyTheme(t){
+  if (t === 'light' || t === 'dark') document.documentElement.setAttribute('data-theme', t);
+  else document.documentElement.removeAttribute('data-theme');
+  themeMetas.forEach(function(x){ x[0].setAttribute('content', t === 'light' ? '#F2F4F1' : t === 'dark' ? '#091012' : x[1]); });
+}
+applyTheme(lsGet(THEME_KEY));
+function settingsSummaries(){
+  var L = last, inp = L && L.inp;
+  var tm = {pass:'проездной', mix:'проездной и такси', car:'машина', walk:'пешком'}[cfg.tmode];
+  $('#setSumIncome').textContent = inp && inp.actual > 0
+    ? money(inp.actual) + ' zł · зарплата ' + paydayVal() + '-го' + (inp.Hfull > 0 ? ' · жильё ' + money(inp.H) + ' zł' : '')
+    : 'впиши зарплату и аренду';
+  $('#setSumDetails').textContent = (inp ? CITIES[inp.city].name : '') + ' · ' + tm + (L ? ' · связь ' + money(L.res.F) + ' zł' : '');
+  $('#setSumFund').textContent = cfg.fund.length
+    ? cfg.fund.length + ' ' + plural(cfg.fund.length, 'статья', 'статьи', 'статей') + (inp ? ' · ' + money(inp.FUND) + ' zł в месяц' : '')
+    : 'подарки, одежда, техника, страховка';
+  $('#setSumBackup').textContent = $('#bkLast').textContent;
+  $('#setStore').textContent = $('#storeStatus').textContent;
+}
+function openSettings(){
+  var t = lsGet(THEME_KEY); t = (t === 'light' || t === 'dark') ? t : 'system';
+  $('#th-' + t).checked = true;
+  var sr = document.querySelector('input[name="setStrategy"][value="' + cfg.strategy + '"]'); if (sr) sr.checked = true;
+  $('#setGoals').checked = !!cfg.goalsAuto;
+  $('#setResetBox').hidden = true;
+  settingsSummaries();
+  if (typeof setSheet.showModal === 'function'){ if (!setSheet.open) setSheet.showModal(); } else setSheet.setAttribute('open', '');
+}
+function closeSettings(){ if (setSheet.open || setSheet.hasAttribute('open')){ if (typeof setSheet.close === 'function') setSheet.close(); else setSheet.removeAttribute('open'); } }
+$('#setBtn').addEventListener('click', openSettings);
+$('#setClose').addEventListener('click', closeSettings);
+setSheet.addEventListener('click', function(e){ if (e.target === setSheet) closeSettings(); });
+$$('input[name="theme"]').forEach(function(r){ r.addEventListener('change', function(){
+  lsSet(THEME_KEY, r.value === 'system' ? '' : r.value); applyTheme(r.value);
+}); });
+$$('input[name="setStrategy"]').forEach(function(r){ r.addEventListener('change', function(){
+  cfg.strategy = r.value; var st = document.getElementById('st-' + r.value); if (st) st.checked = true; onCfgChange();
+}); });
+$('#setGoals').addEventListener('change', function(){
+  cfg.goalsAuto = this.checked; onCfgChange();
+  toast(this.checked ? 'Цели учитываются в плане' : 'Цели больше не меняют план');
+});
+var GO = {income:['plan', '[data-fold="income"]'], details:['plan', '[data-fold="details"]'], fund:['goals', '#hFund'], backup:['history', '#hBackup']};
+$$('.set-item[data-go]').forEach(function(b){ b.addEventListener('click', function(){
+  var g = GO[b.getAttribute('data-go')]; closeSettings(); setTab(g[0]);
+  var el = $(g[1]), panel = el.hasAttribute('data-fold') ? el : el.closest('.panel');
+  if (panel.hasAttribute('data-fold')) setFold(panel, false, true);
+  setTimeout(function(){
+    var y = panel.getBoundingClientRect().top + window.scrollY - 16;
+    window.scrollTo({top:Math.max(0, y), behavior:reduce ? 'auto' : 'smooth'});
+  }, 80);
+}); });
+$('#setReset').addEventListener('click', function(){ var box = $('#setResetBox'); box.hidden = !box.hidden; if (!box.hidden) box.scrollIntoView({block:'nearest', behavior:reduce ? 'auto' : 'smooth'}); });
+$('#setResetNo').addEventListener('click', function(){ $('#setResetBox').hidden = true; });
+$('#setResetYes').addEventListener('click', function(){
+  var prev = {cfg:JSON.parse(JSON.stringify(cfg)), months:JSON.parse(JSON.stringify(months)), folds:JSON.stringify(foldState)}, keys = {};
+  Object.keys(months).forEach(function(k){ keys[k] = 1; });
+  cfg = normCfg({}); months = {};
+  foldState = {}; lsSet(FOLD_KEY, '{}');
+  closeSettings(); commitAll(keys); initFolds(); setTab('plan'); window.scrollTo(0, 0);
+  toast('Все данные сброшены', 'Вернуть', function(){
+    var ks = {}; Object.keys(prev.months).forEach(function(k){ ks[k] = 1; });
+    cfg = normCfg(prev.cfg); months = normMonths(prev.months);
+    try { foldState = JSON.parse(prev.folds) || {}; } catch(e){ foldState = {}; } lsSet(FOLD_KEY, prev.folds);
+    commitAll(ks); initFolds();
+  });
+});
 
 loadLocal();
 applyCfgToDom();
