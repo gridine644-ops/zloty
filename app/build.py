@@ -7,7 +7,7 @@ import os, re, sys, shutil, urllib.request
 
 HERE = os.path.dirname(os.path.abspath(__file__))
 CHROME_UA = 'Mozilla/5.0 (Linux; Android 14) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0 Mobile Safari/537.36'
-BG = (12, 19, 21)
+BG = (6, 16, 20)
 
 
 def get(url, ua=CHROME_UA):
@@ -65,7 +65,7 @@ def patch_android():
     bgxml = os.path.join(res, 'values', 'ic_launcher_background.xml')
     if os.path.exists(bgxml):
         txt = open(bgxml, encoding='utf-8').read()
-        open(bgxml, 'w', encoding='utf-8').write(re.sub(r'#[0-9A-Fa-f]{6,8}', '#0C1315', txt))
+        open(bgxml, 'w', encoding='utf-8').write(re.sub(r'#[0-9A-Fa-f]{6,8}', '#061014', txt))
     splashes = 0
     for root, _, files in os.walk(res):
         for fn in files:
