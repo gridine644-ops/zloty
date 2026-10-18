@@ -597,6 +597,56 @@ label.btn-sm{display:inline-flex}
 .toast button{border:0;background:transparent;color:var(--gold);font:600 13.5px/1 var(--f-body);padding:8px 10px;border-radius:10px;cursor:pointer;white-space:nowrap}
 .toast button:hover{background:var(--gold-soft)}
 
+/* ---------- months ---------- */
+body.has-data .brand > p:first-of-type{display:none}
+.foot{display:none}
+.td-top{display:flex;justify-content:space-between;align-items:center;gap:10px}
+.per-chip{display:inline-flex;align-items:center;gap:3px;flex:none;border:1px solid var(--line2);background:var(--surface2);color:var(--muted);border-radius:999px;padding:5px 7px 5px 11px;font:600 12px/1 var(--f-body);cursor:pointer;white-space:nowrap;transition:color var(--t2), transform var(--t1) var(--ease)}
+.per-chip:hover{color:var(--fg)}
+.per-chip:active{transform:scale(.96)}
+.per-chip .chev{width:14px;height:14px}
+.pay-banner{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:12px;padding:14px 16px;border-radius:var(--r-md);border:1px solid color-mix(in srgb, var(--gold) 50%, transparent);background:var(--gold-soft);animation:viewin var(--t3) var(--ease)}
+.pay-banner b{display:block;font-weight:600;font-size:15px}
+.pay-banner .s{display:block;color:var(--muted);font-size:12.5px;margin-top:2px}
+.pay-banner .btn-sm{flex:none}
+.hm{display:grid;grid-template-columns:minmax(0,1fr) auto auto;align-items:center;gap:10px;width:100%;padding:13px 12px 13px 14px;border:1px solid var(--line);border-radius:var(--r-md);background:var(--surface2);color:var(--fg);text-align:left;cursor:pointer;transition:background var(--t2), transform var(--t1) var(--ease)}
+.hm:hover{background:var(--surface3)}
+.hm:active{transform:scale(.99)}
+.hm-main{min-width:0}
+.hm-main b{display:block;font-weight:600;font-size:15px}
+.hm-main .s{margin-top:2px;font-size:12.5px;color:var(--muted)}
+.hm-res,.pd-chip{font:600 12px/1 var(--f-body);padding:6px 9px;border-radius:999px;white-space:nowrap}
+.hm-plus,.pd-chip.plus{color:var(--ok);background:color-mix(in srgb, var(--ok) 13%, transparent)}
+.hm-minus,.pd-chip.minus{color:var(--bad);background:color-mix(in srgb, var(--bad) 13%, transparent)}
+.hm-now,.pd-chip.now{color:var(--gold);background:var(--gold-soft)}
+.hm-none,.pd-chip{color:var(--muted);background:var(--track)}
+#perSheet .sheet-head .s{display:block;font-size:13px;color:var(--muted);margin-top:3px}
+#perSheet .sheet-in{min-height:min(660px, 82vh)}
+.pd-body{display:flex;flex-direction:column;gap:18px}
+.pd-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:-6px}
+.pd-metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.pd-metrics>div{background:var(--surface2);border:1px solid var(--line);border-radius:var(--r-md);padding:12px 13px;min-width:0}
+.pd-metrics .lbl{display:block;font-size:12px}
+.pd-metrics b{display:block;font:700 20px/1.2 var(--f-display);letter-spacing:-.03em;margin-top:5px;white-space:nowrap}
+.pd-metrics b.pos{color:var(--ok)}
+.pd-metrics b.neg{color:var(--bad)}
+.pd-sec{display:flex;flex-direction:column;gap:12px}
+.pd-sec>.lbl{font-weight:600;color:var(--fg);font-size:14px}
+.pd-row{display:grid;gap:6px}
+.pd-row-top{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px}
+.pd-row-top>span:first-child{display:flex;align-items:center}
+.pd-row-top i{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--c);margin-right:9px}
+.pd-row-top span:last-child{font-size:13px;color:var(--muted);text-align:right}
+.pd-row .meter-track i{background:var(--c)}
+.pd-row .meter-track i.over{background:var(--bad)}
+.pd-note{font-size:13px;color:var(--muted)}
+.pd-cmp{font-size:13.5px;padding:12px 14px;border-radius:var(--r-md);background:var(--surface2);border:1px solid var(--line)}
+.pd-actions{display:flex;flex-wrap:wrap;gap:8px}
+.pd-edit{display:grid;gap:14px;padding:14px;border:1px solid var(--line2);border-radius:var(--r-md);background:var(--surface2)}
+.nm-prev{font-size:13.5px;color:var(--muted);padding:12px 14px;border-radius:var(--r-md);background:var(--surface2);border:1px solid var(--line)}
+.nm-prev:empty{display:none}
+.nm-prev b{color:var(--fg);font-weight:600}
+
 /* ---------- tips teaser and breakdown ---------- */
 .an-open{display:flex;align-items:center;justify-content:space-between;gap:12px;width:100%;margin-top:14px;padding:13px 14px;border-radius:var(--r-md);border:1px solid var(--line2);
   background:var(--surface2);color:var(--fg);text-align:left;cursor:pointer;transition:background var(--t2), transform var(--t1) var(--ease)}
@@ -691,17 +741,22 @@ label.btn-sm{display:inline-flex}
     <img class="logo" alt="" aria-hidden="true" width="54" height="54" src="data:image/jpeg;base64,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">
     <div class="brand">
       <h1>Złoty <span>Plan</span></h1>
-      <p>Вводишь доходы и обязательные платежи, остальное раскладывается по конвертам по ценам Польши на октябрь 2026. Траты записываешь кнопкой внизу, цели и редкие траты живут во вкладке «Цели».</p>
+      <p>Впиши зарплату и аренду, и приложение разложит остальное по конвертам.</p>
       <button type="button" class="install-btn" id="installBtn" hidden>Установить на телефон</button>
       <p class="ios-hint" id="iosHint" hidden>Чтобы поставить на iPhone как приложение: внизу Safari нажми <b>Поделиться</b> → <b>На экран «Домой»</b>.</p>
     </div>
     <button type="button" class="icon-btn set-btn" id="setBtn" aria-label="Настройки" aria-haspopup="dialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10.3 4.3c.4-1.7 3-1.7 3.4 0a1.7 1.7 0 0 0 2.6 1.1c1.5-.9 3.3.8 2.4 2.4a1.7 1.7 0 0 0 1 2.5c1.8.4 1.8 3 0 3.4a1.7 1.7 0 0 0-1 2.6c.9 1.5-.9 3.3-2.4 2.4a1.7 1.7 0 0 0-2.6 1c-.4 1.8-3 1.8-3.4 0a1.7 1.7 0 0 0-2.6-1c-1.5.9-3.3-.9-2.4-2.4a1.7 1.7 0 0 0-1-2.6c-1.8-.4-1.8-3 0-3.4a1.7 1.7 0 0 0 1-2.5c-.9-1.6.9-3.3 2.4-2.4 1 .6 2.3.1 2.6-1.1z"/><circle cx="12" cy="12" r="3"/></svg></button>
   </header>
 
+  <div class="pay-banner" id="payBanner" hidden>
+    <div><b>Пришла зарплата?</b><span class="s" id="payBannerS"></span></div>
+    <button type="button" class="btn-sm gold" id="payStart">Начать месяц</button>
+  </div>
+
   <section class="panel today" aria-labelledby="tdLbl">
     <div class="today-grid">
       <div class="today-main">
-        <span class="lbl" id="tdLbl">Можно потратить сегодня</span>
+        <div class="td-top"><span class="lbl" id="tdLbl">Можно потратить сегодня</span><button type="button" class="per-chip" id="perChip"><span id="perChipT"></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button></div>
         <span class="today-val idle" id="tdValWrap"><b id="tdVal">—</b><small>zł</small></span>
         <span class="today-sub" id="tdSub">Впиши зарплату и аренду с коммуналкой ниже, и здесь появится сумма на сегодня.</span>
       </div>
@@ -717,7 +772,6 @@ label.btn-sm{display:inline-flex}
         </div>
       </div>
     </div>
-    <p class="today-foot">Считается по конвертам «Продукты и быт» и «Развлечения». Транспорт, здоровье, платежи и фонд идут отдельно.</p>
   </section>
 
   <div class="tabs" role="tablist" aria-label="Разделы">
@@ -736,7 +790,6 @@ label.btn-sm{display:inline-flex}
           <label class="field big" for="salary">
             <span>Зарплата на руку (netto)</span>
             <span class="money"><input id="salary" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00"><b>zł</b></span>
-            <span class="hint">Можно с грошами, например 5 873,42</span>
           </label>
           <div class="field">
             <span class="lbl">Другие доходы</span>
@@ -757,7 +810,6 @@ label.btn-sm{display:inline-flex}
               <span>День зарплаты</span>
               <span class="money"><input id="payday" type="text" inputmode="numeric" autocomplete="off" maxlength="2" placeholder="10"><b>число</b></span>
             </label>
-            <span class="hint">По закону зарплату платят не позже 10-го числа следующего месяца. От этого дня считается период.</span>
           </div>
           <div class="field">
             <span class="lbl" id="liveLbl">Живу</span>
@@ -860,7 +912,6 @@ label.btn-sm{display:inline-flex}
       <section class="envelopes" aria-labelledby="hEnv">
         <div class="sec-head">
           <h2 class="h2" id="hEnv">Конверты на месяц</h2>
-          <p class="sub">Обязательное вводишь ты, остальное распределяется само. Замок закрепляет сумму конверта, остальные пересчитываются.</p>
         </div>
         <div class="fixed-row" id="fixedRow"></div>
         <div class="env-grid" id="envGrid"></div>
@@ -888,7 +939,7 @@ label.btn-sm{display:inline-flex}
 
   <section class="goals" id="viewGoals" role="tabpanel" aria-labelledby="tab-goals" hidden>
     <div class="panel" aria-labelledby="hGoals">
-      <div class="panel-head"><h2 class="h2" id="hGoals">Цели накоплений</h2><span class="sub">монеты растут вместе с прогрессом</span></div>
+      <div class="panel-head"><h2 class="h2" id="hGoals">Цели накоплений</h2></div>
       <div class="cover">
         <div class="cover-nums">
           <div><span class="lbl">Нужно на цели</span><b id="gcNeed">0 zł</b><span class="s">в месяц</span></div>
@@ -915,15 +966,14 @@ label.btn-sm{display:inline-flex}
         </label>
         <ul class="rows" id="fundList"></ul>
         <div class="presets" id="fundPresets"></div>
-        <p class="hint">Сумма в месяц считается так, чтобы успеть к нужному месяцу; без месяца — годовая сумма делится на 12. Трату из фонда записывай кнопкой «+ трата» → «Редкие траты».</p>
       </div>
     </div>
   </section>
 
   <section class="history" id="viewHistory" role="tabpanel" aria-labelledby="tab-history" hidden>
     <div class="panel" aria-labelledby="hHist">
-      <div class="panel-head"><h2 class="h2" id="hHist">План и факт по месяцам</h2><span class="sub">продукты, развлечения, транспорт, здоровье и «Другое»</span></div>
-      <p class="empty" id="chEmpty">История начинает копиться с этого месяца. Записывай траты, и здесь появится сравнение плана и факта по каждому периоду.</p>
+      <div class="panel-head"><h2 class="h2" id="hHist">Месяцы</h2><span class="sub">план и факт трат</span></div>
+      <p class="empty" id="chEmpty">Здесь появятся твои месяцы: доход, траты и итог каждого.</p>
       <div class="chart" id="chWrap" hidden>
         <div class="chart-legend"><span><i style="background:var(--ch-plan)"></i>План</span><span><i style="background:var(--ch-fact)"></i>Факт</span></div>
         <div class="ch-plot">
@@ -933,11 +983,10 @@ label.btn-sm{display:inline-flex}
         <div class="ch-tip" id="chTip" role="status" hidden></div>
       </div>
       <div class="hist-list" id="histList"></div>
-      <p class="hint" style="margin-top:12px">«Осталось по факту» — доход минус обязательное, фонд и все записанные траты. Чем полнее записи, тем точнее цифра.</p>
     </div>
     <div class="panel" aria-labelledby="hBackup">
       <div class="panel-head"><h2 class="h2" id="hBackup">Резервная копия</h2><span class="sub" id="bkLast">копий ещё не было</span></div>
-      <p class="sub">Зарплата, траты, цели, фонд и история сохраняются в один файл Excel. Его можно открыть как обычную таблицу, хранить у себя и потом загрузить обратно на любом устройстве.</p>
+      <p class="sub">Все месяцы, траты и цели в одном файле Excel.</p>
       <div class="bk-actions">
         <button type="button" class="btn-primary" id="bkSave">Сохранить в Excel</button>
         <label class="btn-sm" id="bkLoad" for="bkFile" role="button" tabindex="0">Загрузить из файла</label>
@@ -945,7 +994,7 @@ label.btn-sm{display:inline-flex}
       </div>
       <details class="bk-code" id="bkCode">
         <summary>Файл не выбирается? Перенеси кодом</summary>
-        <p class="hint">Так бывает на iPhone и в приложении Claude. Скопируй код, сохрани его в Заметках или отправь себе, а на другом устройстве вставь в поле ниже. В коде то же самое, что в файле Excel.</p>
+        <p class="hint">Скопируй код, сохрани в Заметках и вставь на другом устройстве.</p>
         <div class="bk-actions"><button type="button" class="btn-sm gold" id="bkCopy">Скопировать код копии</button></div>
         <label class="field" for="bkCodeIn" style="margin-top:14px"><span>Вставь код копии</span><textarea id="bkCodeIn" class="text-in" rows="3" autocomplete="off" spellcheck="false" placeholder="ZLOTY1:…"></textarea></label>
         <div class="bk-actions"><button type="button" class="btn-sm" id="bkCodeLoad">Загрузить код</button></div>
@@ -960,17 +1009,11 @@ label.btn-sm{display:inline-flex}
         </div>
         <p class="hint">«Добавить» оставит твои текущие цифры и добавит из файла траты, прошлые месяцы, цели и фонд, которых ещё нет. «Заменить всё» вернёт приложение к состоянию из файла.</p>
       </div>
-      <ol class="bk-steps">
-        <li>Раз в месяц, после зарплаты, сохраняй копию.</li>
-        <li>Файл открывается в Excel или Google Таблицах: листы «Месяцы», «Траты», «Цели», «Фонд», «Настройки».</li>
-        <li>Служебный лист внутри файла не трогай: по нему приложение всё восстанавливает.</li>
-      </ol>
     </div>
   </section>
 
   <div class="foot">
     <p id="storeStatus">Цифры и траты сохраняются в этом браузере.</p>
-    <p>Расчёт по средним ценам. Это ориентир, а не финансовая консультация.</p>
   </div>
 </div>
 
@@ -1008,7 +1051,7 @@ label.btn-sm{display:inline-flex}
     </div>
     <div class="an-body">
       <section class="panel tips-sec" aria-labelledby="hTips">
-        <div class="panel-head"><h2 class="h2" id="hTips">Подсказки</h2><span class="sub">обновляются от твоих цифр и трат</span></div>
+        <div class="panel-head"><h2 class="h2" id="hTips">Подсказки</h2></div>
         <ul class="tips" id="tips"></ul>
       </section>
       <section class="panel ratio" aria-labelledby="hRatio">
@@ -1069,6 +1112,34 @@ label.btn-sm{display:inline-flex}
   </div>
 </dialog>
 
+<dialog class="sheet" id="newSheet" aria-labelledby="nmTitle">
+  <form class="sheet-in" id="nmForm" novalidate>
+    <div class="sheet-head">
+      <h2 class="h2" id="nmTitle">Новый месяц</h2>
+      <button type="button" class="icon-btn" id="nmClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <label class="field" for="nmDate"><span>Начало месяца</span><input id="nmDate" class="text-in" type="date"></label>
+    <div class="row2">
+      <label class="field" for="nmSalary"><span>Зарплата</span><span class="money"><input id="nmSalary" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00"><b>zł</b></span></label>
+      <label class="field" for="nmHome"><span id="nmHomeLbl">Жильё</span><span class="money"><input id="nmHome" type="text" inputmode="decimal" autocomplete="off" placeholder="0,00"><b>zł</b></span></label>
+    </div>
+    <p class="hint">Платежи, доходы и стратегия перенесутся из прошлого месяца.</p>
+    <p class="err" id="nmErr" hidden></p>
+    <p class="nm-prev" id="nmPrev"></p>
+    <button type="submit" class="btn-primary">Начать месяц</button>
+  </form>
+</dialog>
+
+<dialog class="sheet wide" id="perSheet" aria-labelledby="perTitle">
+  <div class="sheet-in">
+    <div class="sheet-head">
+      <div><h2 class="h2" id="perTitle"></h2><span class="s" id="perDates"></span></div>
+      <button type="button" class="icon-btn" id="perClose" aria-label="Закрыть"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+    </div>
+    <div class="pd-body" id="perBody"></div>
+  </div>
+</dialog>
+
 <dialog class="sheet" id="setSheet" aria-labelledby="setTitle">
   <div class="sheet-in">
     <div class="sheet-head">
@@ -1094,6 +1165,7 @@ label.btn-sm{display:inline-flex}
     </div>
     <label class="switch-row set-switch" for="setGoals"><span><b>Учитывать цели в плане</b><span class="s">План откладывает на цели всё, что остаётся после обычных трат на еду, транспорт и здоровье</span></span><input type="checkbox" id="setGoals" role="switch"></label>
     <div class="set-list">
+      <button type="button" class="set-item" id="setNewMonth"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M4 10h16M9 3v4M15 3v4M12 13.5v4M10 15.5h4"/></svg></span><span class="st"><b>Начать новый месяц</b><span class="s">если зарплата пришла раньше</span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" id="setAnalysis"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 20h16"/><path d="M7.5 16.5v-5M12 16.5V6.5M16.5 16.5v-8"/></svg></span><span class="st"><b>Разбор бюджета</b><span class="s">подсказки, 50/30/20, цены Польши</span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" data-go="income"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="12" rx="2.5"/><circle cx="12" cy="12" r="2.5"/><path d="M6.5 9.5h.01M17.5 14.5h.01"/></svg></span><span class="st"><b>Зарплата и жильё</b><span class="s" id="setSumIncome"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
       <button type="button" class="set-item" data-go="details"><span class="si"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-6.5-5.6-6.5-11a6.5 6.5 0 0 1 13 0c0 5.4-6.5 11-6.5 11z"/><circle cx="12" cy="10" r="2.3"/></svg></span><span class="st"><b>Город, транспорт, связь</b><span class="s" id="setSumDetails"></span></span><svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg></button>
@@ -1107,7 +1179,7 @@ label.btn-sm{display:inline-flex}
       <p>Удалить все цифры, траты, цели и историю? Перед этим лучше сохранить копию в Excel. Сразу после сброса его можно отменить кнопкой «Вернуть».</p>
       <div class="bk-actions"><button type="button" class="btn-sm danger" id="setResetYes">Сбросить</button><button type="button" class="btn-sm" id="setResetNo">Отмена</button></div>
     </div>
-    <p class="set-about"><b>Złoty Plan</b> · версия 2.1<br><span id="setStore"></span><br>Расчёт по средним ценам Польши на октябрь 2026. Это ориентир, а не финансовая консультация.</p>
+    <p class="set-about"><b>Złoty Plan</b> · версия 2.2<br><span id="setStore"></span><br>Расчёт по средним ценам Польши на октябрь 2026. Это ориентир, а не финансовая консультация.</p>
   </div>
 </dialog>
 
@@ -1200,7 +1272,7 @@ var GOAL_PRESETS = ['Подушка безопасности', 'Отпуск', '
 
 /* ---------- state ---------- */
 var DEF = {salary:'', home:'', payday:'10', phone:'50', net:'50', extra:'55', city:'warszawa', customTicket:'110', tmode:'pass', strategy:'balance',
-  locks:{}, custom:[], incomes:[], incMode:'month', live:'solo', share:'50', fund:[], fundStart:'', goals:[], goalsAuto:true, hist:{}, lastBackup:''};
+  locks:{}, custom:[], incomes:[], incMode:'month', live:'solo', share:'50', fund:[], fundStart:'', goals:[], goalsAuto:true, hist:{}, lastBackup:'', cur:'', curAuto:false};
 var PKEYS = ['home','com','oblig','fund','groc','trans','health','fun','save'];
 var SIMPLE = ['salary','home','payday','phone','net','extra','customTicket','share','fundStart'];
 function idOk(x){ return x && typeof x.id === 'string' && /^[a-z0-9]{4,24}$/.test(x.id); }
@@ -1214,6 +1286,8 @@ function normCfg(o){
   if (STRAT[o.strategy]) c.strategy = o.strategy;
   if (o.incMode === 'avg') c.incMode = 'avg';
   if (o.goalsAuto === false) c.goalsAuto = false;
+  if (typeof o.cur === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(o.cur)) c.cur = o.cur;
+  if (o.curAuto === true) c.curAuto = true;
   if (['solo','partner','flat'].indexOf(o.live) > -1) c.live = o.live;
   if (o.locks && typeof o.locks === 'object') Object.keys(o.locks).forEach(function(k){ var v = +o.locks[k]; if (AUTO.indexOf(k) > -1 && isFinite(v)) c.locks[k] = Math.max(0, r2(v)); });
   if (Array.isArray(o.custom)) c.custom = o.custom.filter(idOk).slice(0, 20).map(function(x){ return {id:x.id, name:str(x.name, 40), amt:str(x.amt)}; });
@@ -1231,6 +1305,8 @@ function normCfg(o){
     Object.keys(o.hist).filter(function(k){ return /^\d{4}-\d{2}-\d{2}$/.test(k) && o.hist[k] && typeof o.hist[k] === 'object'; }).sort().slice(-24).forEach(function(k){
       var h = o.hist[k]; c.hist[k] = {inc:Math.max(0, r2(+h.inc || 0)), fund:Math.max(0, r2(+h.fund || 0))};
       if (h.p && typeof h.p === 'object'){ var p = {}; PKEYS.forEach(function(q){ p[q] = Math.max(0, r2(+h.p[q] || 0)); }); c.hist[k].p = p; }
+      if (h.ed) c.hist[k].ed = 1;
+      if (h.auto) c.hist[k].auto = 1;
     });
   }
   if (typeof o.lastBackup === 'string' && /^\d{4}-\d{2}-\d{2}$/.test(o.lastBackup)) c.lastBackup = o.lastBackup;
@@ -1357,6 +1433,40 @@ function period(payday, ref){
   var e = pd(s.getFullYear(), s.getMonth()+1);
   var total = Math.round((e - s)/864e5), left = Math.max(1, Math.round((e - t)/864e5));
   return {start:s, end:e, today:t, s:ds(s), e:ds(e), t:ds(t), total:total, left:left, passed:total - left};
+}
+/* months run from one salary to the next; cfg.cur is the start of the current one */
+function addDays(d, n){ return new Date(d.getFullYear(), d.getMonth(), d.getDate() + n); }
+function todayD(){ var t = new Date(); t.setHours(0,0,0,0); return t; }
+function estEnd(startDs){
+  var s = fromDs(startDs), pd = paydayVal(), min = addDays(s, 14);
+  function at(y, m){ var dim = new Date(y, m + 1, 0).getDate(); return new Date(y, m, Math.min(pd, dim)); }
+  var c = at(s.getFullYear(), s.getMonth()), g = 0;
+  while (c <= min && g++ < 3) c = at(c.getFullYear(), c.getMonth() + 1);
+  return c;
+}
+function ensureCur(){
+  if (cfg.cur && /^\d{4}-\d{2}-\d{2}$/.test(cfg.cur) && cfg.cur <= ds(todayD())) return false;
+  cfg.cur = period(paydayVal()).s; return true;
+}
+function curPeriod(){
+  var t = todayD(), s = fromDs(cfg.cur), end = estEnd(cfg.cur), endEff = end > t ? end : addDays(t, 1);
+  var total = Math.max(1, Math.round((endEff - s)/864e5)), left = Math.max(1, Math.round((endEff - t)/864e5));
+  return {start:s, end:end, today:t, s:cfg.cur, e:'9999-12-31', t:ds(t), total:total, left:left, passed:total - left, due:t >= end};
+}
+function closeCurrent(){
+  var P0 = curPeriod(), G = goalsTotal(), inp0 = readInputs(P0);
+  inp0.goalNeed = cfg.goalsAuto ? G.need : 0;
+  recordHist(inp0, allocate(inp0), P0);
+}
+function startPeriod(d, vals, auto){
+  closeCurrent();
+  cfg.cur = d; cfg.curAuto = !!auto;
+  if (vals){ if (vals.salary != null) cfg.salary = vals.salary; if (vals.home != null) cfg.home = vals.home; }
+}
+function autoRoll(){
+  var t = todayD(), n = 0;
+  while (n < 24){ var end = estEnd(cfg.cur); if (t < addDays(end, 3)) break; startPeriod(ds(end), null, true); n++; }
+  return n;
 }
 function paydayVal(){ var pd = parseInt(cfg.payday, 10); return clamp(isFinite(pd) && pd > 0 ? pd : 10, 1, 31); }
 function monthsLeftTo(due){ var m0 = new Date().getMonth() + 1; return due >= m0 ? due - m0 + 1 : due + 12 - m0 + 1; }
@@ -1501,7 +1611,14 @@ function removeExpense(id){
 
 /* ---------- toast ---------- */
 var toastTimer = null;
+/* an open modal sheet sits in the top layer, so the toast moves inside it to stay visible and tappable */
+function placeToast(){
+  var t = $('#toast'), open = $$('dialog[open]'), host = open.length ? open[open.length - 1] : document.body;
+  if (t.parentNode !== host) host.appendChild(t);
+}
+document.addEventListener('close', function(){ setTimeout(placeToast, 0); }, true);
 function toast(msg, actLabel, act){
+  placeToast();
   $('#toastMsg').textContent = msg;
   var b = $('#toastAct');
   if (actLabel){ b.hidden = false; b.textContent = actLabel; b.onclick = function(){ hideToast(); act(); }; }
@@ -1990,6 +2107,8 @@ function recordHist(inp, res, P){
     nx.p = p;
   }
   var cur = cfg.hist[P.s];
+  if (cur && cur.ed) nx.ed = 1;
+  if ((P.s === cfg.cur && cfg.curAuto) || (cur && cur.auto)) nx.auto = 1;
   if (cur && JSON.stringify(cur) === JSON.stringify(nx)) return;
   cfg.hist[P.s] = nx;
   var keys = Object.keys(cfg.hist).sort();
@@ -2046,7 +2165,13 @@ function goalsTotal(){
   return {count:cfg.goals.length, need:need};
 }
 function render(){
-  var P = period(paydayVal());
+  var fixedCur = ensureCur(), rolled = autoRoll();
+  if (fixedCur || rolled){ saveLocal(); if (remoteReady()) scheduleCfgSave(); }
+  if (rolled && !render.told){ render.told = true; setTimeout(function(){ toast(rolled === 1 ? 'Новый месяц начат сам, с прошлыми цифрами. Проверь зарплату' : 'Начато новых месяцев: ' + rolled + '. Проверь зарплату'); }, 500); }
+  var P = curPeriod();
+  $('#perChipT').textContent = perLabel({start:P.start, end:P.end});
+  var pb = $('#payBanner'); pb.hidden = !P.due;
+  if (P.due) $('#payBannerS').textContent = 'Если не начать, новый месяц начнётся сам ' + dShort.format(addDays(P.end, 3));
   pruneOnce(P);
   var G = goalsTotal(), inp = readInputs(P);
   inp.goalNeed = cfg.goalsAuto ? G.need : 0;
@@ -2187,8 +2312,8 @@ function render(){
 
 function renderToday(inp, res, P, sp){
   var a = res.a, wrap = $('#tdValWrap');
-  $('#tdDays').textContent = P.left + ' ' + plural(P.left, 'день', 'дня', 'дней');
-  $('#tdPayday').textContent = 'зарплата ' + dShort.format(P.end);
+  $('#tdDays').textContent = P.due ? 'пришла?' : P.left + ' ' + plural(P.left, 'день', 'дня', 'дней');
+  $('#tdPayday').textContent = P.due ? 'начни новый месяц' : 'зарплата ' + dShort.format(P.end);
   var dayShare = (P.passed + 1)/P.total;
   $('#paceDays').style.width = (dayShare*100).toFixed(1)+'%';
   $('#paceDaysT').textContent = pc(dayShare)+'%';
@@ -2358,30 +2483,40 @@ var MON_SHORT = new Intl.DateTimeFormat('ru-RU', {month:'short'});
 var histCache = [], histOpen = {};
 function nextPayday(start, payday){ var y = start.getFullYear(), m = start.getMonth() + 1; var dim = new Date(y, m+1, 0).getDate(); return new Date(y, m, Math.min(payday, dim)); }
 function perLabel(x){ var endDay = new Date(x.end.getFullYear(), x.end.getMonth(), x.end.getDate() - 1); return dShort.format(x.start) + ' — ' + dShort.format(endDay); }
-function historyData(curKey){
-  var pd = paydayVal(), map = {};
-  function get(k){ if (!map[k]) map[k] = {s:k, h:cfg.hist[k] || null, by:blank(), n:0}; return map[k]; }
-  Object.keys(cfg.hist).forEach(get);
+function historyData(){
+  var cur = cfg.cur, pd = paydayVal(), map = {};
+  var keys = Object.keys(cfg.hist).filter(function(k){ return k < cur; }).concat([cur]).sort();
+  function get(k){ if (!map[k]) map[k] = {s:k, h:cfg.hist[k] || null, by:blank(), n:0, items:[]}; return map[k]; }
+  keys.forEach(get);
+  function keyFor(d){
+    if (d >= cur) return cur;
+    for (var i = keys.length - 1; i >= 0; i--) if (d >= keys[i]) return keys[i];
+    return period(pd, fromDs(d)).s;
+  }
   Object.keys(months).forEach(function(mk){ (months[mk] || []).forEach(function(it){
-    var x = get(period(pd, fromDs(it.d)).s), c = TNAME[it.c] ? it.c : 'other';
-    x.by[c] += +it.a; x.n++;
+    var x = get(keyFor(it.d)), c = TNAME[it.c] ? it.c : 'other';
+    x.by[c] += +it.a; x.n++; x.items.push(it);
   }); });
-  get(curKey);
-  return Object.keys(map).filter(function(k){ return k <= curKey; }).sort().reverse().map(function(k){
-    var x = map[k], p = x.h && x.h.p;
-    x.start = fromDs(k); x.end = nextPayday(x.start, pd); x.current = k === curKey;
+  var all = Object.keys(map).sort();
+  return all.slice().reverse().map(function(k){
+    var x = map[k], p = x.h && x.h.p, idx = all.indexOf(k);
+    x.start = fromDs(k); x.current = k === cur;
+    x.end = x.current ? estEnd(k) : (all[idx + 1] ? fromDs(all[idx + 1]) : nextPayday(x.start, pd));
     x.p = p || null;
     x.plan = p ? r2(p.groc + p.fun + p.trans + p.health) : null;
     x.fact = r2(x.by.groc + x.by.fun + x.by.trans + x.by.health + x.by.other);
     x.inc = x.h && x.h.inc > 0 ? x.h.inc : null;
     x.fixed = p ? r2(p.home + p.com + p.oblig + p.fund) : null;
     x.left = (x.inc != null && p) ? r2(x.inc - x.fixed - x.fact) : null;
+    x.items.sort(function(u, v){ return u.d < v.d ? 1 : u.d > v.d ? -1 : (v.t || 0) - (u.t || 0); });
     return x;
   }).filter(function(x){ return x.current || x.h || x.n; });
 }
+function perName(x){ var m = MONTHS[x.start.getMonth()]; return m.charAt(0).toUpperCase() + m.slice(1) + (x.start.getFullYear() !== todayD().getFullYear() ? ' ' + x.start.getFullYear() : ''); }
+function signMoney(v){ return (v >= 0 ? '+' : '−') + money(Math.abs(v)) + ' zł'; }
 function niceMax(v){ if (v <= 0) return 100; var e = Math.pow(10, Math.floor(Math.log10(v))), f = v/e; return (f <= 1 ? 1 : f <= 2 ? 2 : f <= 5 ? 5 : 10)*e; }
-function renderHistory(curKey){
-  var data = historyData(curKey); histCache = data;
+function renderHistory(){
+  var data = historyData(); histCache = data;
   var chartData = data.filter(function(x){ return x.plan != null || x.fact > 0; }).slice(0, 6).reverse();
   var cols = $('#chCols'), grid = $('#chGrid'); cols.textContent = ''; grid.textContent = ''; $('#chTip').hidden = true;
   $('#chEmpty').hidden = chartData.length > 0; $('#chWrap').hidden = !chartData.length;
@@ -2407,34 +2542,16 @@ function renderHistory(curKey){
     });
   }
   var list = $('#histList'); list.textContent = '';
-  data.slice(0, 12).forEach(function(x){
-    var d = document.createElement('details'); d.className = 'hist-item';
-    d.open = histOpen[x.s] != null ? histOpen[x.s] : x.current;
-    d.addEventListener('toggle', function(){ histOpen[x.s] = d.open; });
-    var sm = document.createElement('summary');
-    var per = document.createElement('span'); per.className = 'hi-per'; per.textContent = perLabel(x);
-    if (x.current){ var em = document.createElement('em'); em.textContent = 'сейчас'; per.appendChild(em); }
-    var lf = document.createElement('span'); lf.className = 'hi-left';
-    lf.innerHTML = x.left != null ? (x.current ? 'пока осталось ' : 'осталось ') + '<b>' + money(x.left) + ' zł</b>' : 'потрачено <b>' + money(x.fact) + ' zł</b>';
-    sm.appendChild(per); sm.appendChild(lf); d.appendChild(sm);
-    var body = document.createElement('div'); body.className = 'hi-body';
-    var rows = [];
-    if (x.inc != null) rows.push(['Доход', x.inc, null, null]);
-    if (x.p){ [['home','Жильё'],['com','Связь'],['oblig','Платежи'],['fund','В фонд']].forEach(function(q){ if (x.p[q[0]] > 0) rows.push([q[1], x.p[q[0]], null, null]); }); }
-    [['groc','Продукты и быт'],['fun','Развлечения'],['trans','Транспорт'],['health','Здоровье']].forEach(function(q){
-      rows.push([q[1], x.p ? x.p[q[0]] : null, x.by[q[0]], x.p ? x.by[q[0]] - x.p[q[0]] : null]);
-    });
-    if (x.by.other > 0) rows.push(['Другое', null, x.by.other, null]);
-    if (x.by.fund > 0) rows.push(['Из фонда', null, x.by.fund, null]);
-    if (x.p) rows.push(['Накопления по плану', x.p.save, null, null]);
-    var t = '<table class="hi-table"><thead><tr><th>Статья</th><th>План</th><th>Факт</th><th>Разница</th></tr></thead><tbody>';
-    rows.forEach(function(r){
-      var diff = r[3] == null ? '' : (Math.abs(r[3]) < .005 ? '0' : (r[3] > 0 ? '<span class="over">▲ +' + money(r[3]) + '</span>' : '<span class="under">▼ ' + money(-r[3]) + '</span>'));
-      t += '<tr><td>' + r[0] + '</td><td>' + (r[1] == null ? '—' : money(r[1])) + '</td><td>' + (r[2] == null ? '—' : money(r[2])) + '</td><td>' + diff + '</td></tr>';
-    });
-    t += '</tbody></table>';
-    body.innerHTML = t; d.appendChild(body); list.appendChild(d);
+  data.slice(0, 24).forEach(function(x){
+    var b = document.createElement('button'); b.type = 'button'; b.className = 'hm';
+    var r = x.current ? ['now', 'идёт'] : (x.left != null ? [x.left >= 0 ? 'plus' : 'minus', signMoney(x.left)] : ['none', money(x.fact) + ' zł']);
+    var sub = perLabel(x) + (x.inc ? ' · доход ' + money(x.inc) : '') + ' · ' + x.n + ' ' + plural(x.n, 'трата', 'траты', 'трат') + (x.h && x.h.ed ? ' · изменено' : '');
+    b.innerHTML = '<span class="hm-main"><b>' + perName(x) + '</b><span class="s">' + esc(sub) + '</span></span><span class="hm-res hm-' + r[0] + '">' + r[1] + '</span>' +
+      '<svg class="chev" viewBox="0 0 24 24" aria-hidden="true"><path d="M9 6l6 6-6 6"/></svg>';
+    b.addEventListener('click', function(){ openPeriod(x.s); });
+    list.appendChild(b);
   });
+  if (perKey) renderPeriod();
   $('#bkLast').textContent = cfg.lastBackup ? 'последняя копия ' + dShort.format(fromDs(cfg.lastBackup)) : 'копий ещё не было';
 }
 function showTip(col){
@@ -2457,7 +2574,7 @@ function hideTip(){ $('#chTip').hidden = true; $$('#chCols .ch-col').forEach(fun
   cols.addEventListener('pointerleave', hideTip);
   cols.addEventListener('focusin', function(e){ var c = e.target.closest('.ch-col'); if (c) showTip(c); });
   cols.addEventListener('focusout', hideTip);
-  cols.addEventListener('click', function(e){ var c = e.target.closest('.ch-col'); if (c) showTip(c); });
+  cols.addEventListener('click', function(e){ var c = e.target.closest('.ch-col'); if (!c) return; var x = histCache[+c.getAttribute('data-i')]; if (x) openPeriod(x.s); });
 })();
 
 /* ---------- backup: Excel export / import ---------- */
@@ -2480,7 +2597,7 @@ function xsheet(X, rows, widths){
   return ws;
 }
 function buildWorkbook(X){
-  var wb = X.utils.book_new(), data = historyData(last.P.s), inp = last.inp;
+  var wb = X.utils.book_new(), data = historyData(), inp = last.inp;
   function v(n){ return n == null ? '' : r2(n); }
   var mRows = [['Период','Доход','Жильё','Связь','Платежи','В фонд','Продукты: план','Продукты: факт','Развлечения: план','Развлечения: факт','Транспорт: план','Транспорт: факт','Здоровье: план','Здоровье: факт','Другое','Из фонда','Накопления: план','Осталось по факту']];
   data.forEach(function(x){
@@ -2660,8 +2777,8 @@ $('#bkCancel').addEventListener('click', function(){ pendingImport = null; $('#b
 
 /* ---------- sheet ---------- */
 var sheet = $('#sheet'), lastCat = lsGet('zloty-plan-lastcat') || 'groc';
-function openSheet(cat){
-  $('#exAmt').value = ''; $('#exNote').value = ''; $('#exDate').value = ds(new Date()); $('#exErr').hidden = true;
+function openSheet(cat, date){
+  $('#exAmt').value = ''; $('#exNote').value = ''; $('#exDate').value = date || ds(new Date()); $('#exErr').hidden = true;
   var c = cat || lastCat;
   var r = document.getElementById('exc-' + c) || document.getElementById('exc-groc'); r.checked = true;
   renderNoteChips(r.value);
@@ -2816,6 +2933,149 @@ $('#city').addEventListener('change', function(){ cfg.city = this.value; onCfgCh
 document.addEventListener('visibilitychange', function(){ if (!document.hidden && last && last.day !== ds(new Date())) render(); });
 setInterval(function(){ if (last && last.day !== ds(new Date())) render(); }, 60000);
 
+/* ---------- month view ---------- */
+var perSheet = $('#perSheet'), perKey = null, backToMonth = null;
+function dlgOpen(d){ if (typeof d.showModal === 'function'){ if (!d.open) d.showModal(); } else d.setAttribute('open', ''); }
+function dlgClose(d){ if (d.open || d.hasAttribute('open')){ if (typeof d.close === 'function') d.close(); else d.removeAttribute('open'); } }
+function openPeriod(k){ perKey = k; renderPeriod(); dlgOpen(perSheet); perSheet.querySelector('.sheet-in').scrollTop = 0; }
+function closePeriod(){ perKey = null; dlgClose(perSheet); }
+perSheet.addEventListener('close', function(){ perKey = null; });
+$('#perClose').addEventListener('click', closePeriod);
+perSheet.addEventListener('click', function(e){ if (e.target === perSheet) closePeriod(); });
+function renderPeriod(){
+  if (!perKey) return;
+  var data = histCache, i = -1;
+  for (var j = 0; j < data.length; j++) if (data[j].s === perKey){ i = j; break; }
+  if (i < 0){ closePeriod(); return; }
+  var x = data[i], prev = data[i + 1] || null, h = x.h || {}, p = x.p;
+  $('#perTitle').textContent = perName(x);
+  $('#perDates').textContent = perLabel(x) + (x.current ? ', идёт сейчас' : '');
+  var chips = '';
+  if (!x.current && x.left != null) chips += '<span class="pd-chip ' + (x.left >= 0 ? 'plus' : 'minus') + '">' + (x.left >= 0 ? 'осталось ' : 'перерасход ') + money(Math.abs(x.left)) + ' zł</span>';
+  if (x.current) chips += '<span class="pd-chip now">текущий месяц</span>';
+  if (h.ed) chips += '<span class="pd-chip">изменено</span>';
+  if (h.auto) chips += '<span class="pd-chip">начат сам</span>';
+  function metric(label, v, signed){
+    var cls = signed && v != null ? (v >= 0 ? 'pos' : 'neg') : '';
+    return '<div><span class="lbl">' + label + '</span><b class="' + cls + '">' + (v == null ? '—' : (signed ? signMoney(v) : money(v) + ' zł')) + '</b></div>';
+  }
+  var html = (chips ? '<div class="pd-chips">' + chips + '</div>' : '') +
+    '<div class="pd-metrics">' + metric('Доход', x.inc) + metric('Обязательное', x.fixed) + metric('Потрачено', x.fact) + metric(x.current ? 'Пока осталось' : 'Осталось', x.left, true) + '</div>';
+  var rows = [['groc','Продукты и быт'],['fun','Развлечения'],['trans','Транспорт'],['health','Здоровье']];
+  html += '<div class="pd-sec"><span class="lbl">Конверты: факт и план</span>';
+  rows.forEach(function(r){
+    var pl = p ? p[r[0]] : null, f = x.by[r[0]], over = pl != null && f > pl + .005, w = pl ? clamp(f/pl, 0, 1)*100 : (f > 0 ? 100 : 0);
+    html += '<div class="pd-row" style="--c:var(' + TCOL[r[0]] + ')"><div class="pd-row-top"><span><i></i>' + r[1] + '</span><span>' + money(f) + (pl != null ? ' из ' + money(pl) : '') + '</span></div>' +
+      '<div class="meter-track"><i class="' + (over ? 'over' : '') + '" style="width:' + w.toFixed(1) + '%"></i></div></div>';
+  });
+  if (x.by.other > 0) html += '<div class="pd-row" style="--c:var(--c-free)"><div class="pd-row-top"><span><i></i>Другое</span><span>' + money(x.by.other) + '</span></div></div>';
+  if (x.by.fund > 0) html += '<div class="pd-row" style="--c:var(--c-fund)"><div class="pd-row-top"><span><i></i>Из фонда редких трат</span><span>' + money(x.by.fund) + '</span></div></div>';
+  if (p && p.save > 0) html += '<p class="pd-note">В накопления по плану: ' + money(p.save) + ' zł</p>';
+  html += '</div>';
+  if (prev && prev.n){
+    var pm = MONTHS_IN[prev.start.getMonth()];
+    if (x.current) html += '<p class="pd-cmp">' + pm.charAt(0).toUpperCase() + pm.slice(1) + ' за весь месяц ушло ' + money(prev.fact) + ' zł, сейчас ' + money(x.fact) + ' zł.</p>';
+    else {
+      var d = r2(x.fact - prev.fact), dg = r2(x.by.groc - prev.by.groc);
+      html += '<p class="pd-cmp">' + (Math.abs(d) < 1 ? 'Потрачено столько же, сколько ' + pm + '.' : 'Потрачено на ' + money(Math.abs(d)) + ' zł ' + (d > 0 ? 'больше' : 'меньше') + ', чем ' + pm + '.') +
+        (Math.abs(dg) >= 50 ? ' На продукты ' + (dg > 0 ? 'больше' : 'меньше') + ' на ' + money(Math.abs(dg)) + ' zł.' : '') + '</p>';
+    }
+  }
+  html += '<div class="pd-sec"><span class="lbl">Траты' + (x.n ? ' · ' + x.n : '') + '</span><div id="pdList"></div></div>';
+  html += '<div class="pd-actions"><button type="button" class="btn-sm" data-act="add">+ Добавить трату</button>' +
+    (x.current ? '<button type="button" class="btn-sm gold" data-act="new">Начать новый месяц</button>' : '<button type="button" class="btn-sm" data-act="edit">Изменить доход и жильё</button>') + '</div>';
+  if (!x.current) html += '<form class="pd-edit" id="pdEdit" hidden novalidate>' +
+    '<div class="row2"><label class="field" for="pdInc"><span>Доход</span><span class="money"><input id="pdInc" type="text" inputmode="decimal" autocomplete="off"><b>zł</b></span></label>' +
+    (p ? '<label class="field" for="pdHome"><span>Жильё</span><span class="money"><input id="pdHome" type="text" inputmode="decimal" autocomplete="off"><b>zł</b></span></label>' : '') + '</div>' +
+    '<div class="pd-actions"><button type="submit" class="btn-sm gold">Сохранить</button><button type="button" class="btn-sm" data-act="cancel">Отмена</button></div></form>';
+  var body = $('#perBody'); body.innerHTML = html;
+  var host = $('#pdList');
+  if (!x.items.length){ var e0 = document.createElement('p'); e0.className = 'pd-note'; e0.textContent = 'В этом месяце трат не записано.'; host.appendChild(e0); }
+  var groups = [];
+  x.items.forEach(function(it){ var g = groups[groups.length - 1]; if (!g || g.d !== it.d){ g = {d:it.d, items:[], sum:0}; groups.push(g); } g.items.push(it); g.sum += +it.a; });
+  groups.forEach(function(g){
+    var box = document.createElement('div'); box.className = 'day';
+    var head = document.createElement('div'); head.className = 'day-head';
+    var hl = document.createElement('span'); hl.textContent = dLong.format(fromDs(g.d));
+    var hr = document.createElement('span'); hr.textContent = money(g.sum) + ' zł';
+    head.appendChild(hl); head.appendChild(hr); box.appendChild(head);
+    var ul = document.createElement('ul'); ul.className = 'ex-list';
+    g.items.forEach(function(it){
+      var c = TNAME[it.c] ? it.c : 'other';
+      var li = document.createElement('li'); li.className = 'ex';
+      var sw = document.createElement('i'); sw.style.background = 'var(' + TCOL[c] + ')';
+      var main = document.createElement('div'); main.className = 'ex-main';
+      var cn = document.createElement('span'); cn.className = 'ex-cat'; cn.textContent = TNAME[c]; main.appendChild(cn);
+      if (it.n){ var nn = document.createElement('span'); nn.className = 'ex-note'; nn.textContent = it.n; main.appendChild(nn); }
+      var am = document.createElement('b'); am.className = 'ex-amt'; am.textContent = money(it.a);
+      var del = document.createElement('button'); del.type = 'button'; del.className = 'icon-btn'; del.setAttribute('aria-label', 'Удалить трату ' + money(it.a) + ' zł'); del.innerHTML = ICON.x;
+      del.addEventListener('click', function(){ var f = removeExpense(it.id); if (f) toast('Удалено: ' + money(f.item.a) + ' zł', 'Вернуть', function(){ addExpense(f.item); }); });
+      li.appendChild(sw); li.appendChild(main); li.appendChild(am); li.appendChild(del); ul.appendChild(li);
+    });
+    box.appendChild(ul); host.appendChild(box);
+  });
+}
+$('#perBody').addEventListener('click', function(e){
+  var b = e.target.closest('[data-act]'); if (!b || !perKey) return;
+  var act = b.getAttribute('data-act'), k = perKey, x = null;
+  histCache.forEach(function(y){ if (y.s === k) x = y; });
+  if (!x) return;
+  if (act === 'add'){ backToMonth = k; closePeriod(); openSheet(null, x.current ? ds(new Date()) : x.s); }
+  else if (act === 'new'){ closePeriod(); openNewMonth(); }
+  else if (act === 'edit'){
+    var f = $('#pdEdit'); f.hidden = !f.hidden;
+    if (!f.hidden){ $('#pdInc').value = x.inc != null ? numStr(x.inc) : ''; if ($('#pdHome')) $('#pdHome').value = x.p ? numStr(x.p.home) : ''; $('#pdInc').focus(); f.scrollIntoView({block:'nearest', behavior:reduce ? 'auto' : 'smooth'}); }
+  }
+  else if (act === 'cancel') $('#pdEdit').hidden = true;
+});
+$('#perBody').addEventListener('input', function(e){ if (e.target.matches('#pdInc, #pdHome')) cleanMoney(e.target); });
+$('#perBody').addEventListener('submit', function(e){
+  if (e.target.id !== 'pdEdit') return;
+  e.preventDefault();
+  var k = perKey, h = cfg.hist[k] || (cfg.hist[k] = {inc:0, fund:0});
+  h.inc = Math.max(0, r2(parse($('#pdInc').value)));
+  if (h.p && $('#pdHome')) h.p.home = Math.max(0, r2(parse($('#pdHome').value)));
+  h.ed = 1;
+  saveLocal(); scheduleCfgSave(); render();
+  toast('Месяц изменён');
+});
+$('#perChip').addEventListener('click', function(){ openPeriod(cfg.cur); });
+sheet.addEventListener('close', function(){ if (backToMonth){ var k = backToMonth; backToMonth = null; setTimeout(function(){ openPeriod(k); }, 60); } });
+
+/* ---------- new month ---------- */
+var newSheet = $('#newSheet');
+function openNewMonth(){
+  var P = curPeriod(), t = todayD();
+  var d = $('#nmDate');
+  d.min = ds(addDays(fromDs(cfg.cur), 1)); d.max = ds(t);
+  d.value = P.due ? ds(P.end) : ds(t);
+  $('#nmSalary').value = cfg.salary || ''; $('#nmHome').value = cfg.home || '';
+  $('#nmHomeLbl').textContent = cfg.live === 'solo' ? 'Жильё' : 'Жильё, вся сумма';
+  $('#nmErr').hidden = true;
+  var x = null; histCache.forEach(function(y){ if (y.current) x = y; });
+  $('#nmPrev').innerHTML = x ? '«' + perName(x) + '» закроется и останется в истории' + (x.left != null ? ': ' + (x.left >= 0 ? 'осталось' : 'перерасход') + ' <b>' + money(Math.abs(x.left)) + ' zł</b>' : '') + ', ' + x.n + ' ' + plural(x.n, 'трата', 'траты', 'трат') + '.' : '';
+  dlgOpen(newSheet);
+}
+$('#payStart').addEventListener('click', openNewMonth);
+$('#nmClose').addEventListener('click', function(){ dlgClose(newSheet); });
+newSheet.addEventListener('click', function(e){ if (e.target === newSheet) dlgClose(newSheet); });
+['#nmSalary', '#nmHome'].forEach(function(id){ $(id).addEventListener('input', function(){ cleanMoney(this); $('#nmErr').hidden = true; }); });
+$('#nmForm').addEventListener('submit', function(e){
+  e.preventDefault();
+  var dv = $('#nmDate').value, err = $('#nmErr');
+  function fail(msg){ err.textContent = msg; err.hidden = false; }
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(dv)) return fail('Выбери дату начала месяца.');
+  if (dv <= cfg.cur) return fail('Новый месяц должен начаться после ' + dShort.format(fromDs(cfg.cur)) + '.');
+  if (dv > ds(todayD())) return fail('Месяц нельзя начать в будущем.');
+  if (!(parse($('#nmSalary').value) > 0)) return fail('Впиши зарплату за этот месяц.');
+  var x = null; histCache.forEach(function(y){ if (y.current) x = y; });
+  var name = x ? perName(x) : 'Прошлый месяц';
+  startPeriod(dv, {salary:$('#nmSalary').value.trim(), home:$('#nmHome').value.trim()}, false);
+  dlgClose(newSheet); applyCfgToDom(); onCfgChange();
+  try { if (navigator.vibrate) navigator.vibrate(15); } catch(_){}
+  toast('«' + name + '» сохранён в истории. Новый месяц начат');
+});
+
 /* ---------- budget breakdown ---------- */
 var anSheet = $('#anSheet');
 function openAnalysis(){ if (typeof anSheet.showModal === 'function'){ if (!anSheet.open) anSheet.showModal(); } else anSheet.setAttribute('open', ''); anSheet.querySelector('.sheet-in').scrollTop = 0; }
@@ -2858,6 +3118,7 @@ function openSettings(){
 function closeSettings(){ if (setSheet.open || setSheet.hasAttribute('open')){ if (typeof setSheet.close === 'function') setSheet.close(); else setSheet.removeAttribute('open'); } }
 $('#setBtn').addEventListener('click', openSettings);
 $('#setAnalysis').addEventListener('click', function(){ closeSettings(); openAnalysis(); });
+$('#setNewMonth').addEventListener('click', function(){ closeSettings(); openNewMonth(); });
 $('#setClose').addEventListener('click', closeSettings);
 setSheet.addEventListener('click', function(e){ if (e.target === setSheet) closeSettings(); });
 $$('input[name="theme"]').forEach(function(r){ r.addEventListener('change', function(){
